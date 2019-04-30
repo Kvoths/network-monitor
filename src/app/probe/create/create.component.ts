@@ -1,28 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { PeticionesService } from '../../services/peticiones.service';
+import { ProbesService } from '../../services/probes.service';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss'],
-  providers: [PeticionesService]
+  providers: [ProbesService]
 })
+
 export class CreateComponent implements OnInit {
-  public probes;
 
   constructor(
-    private _peticionesService: PeticionesService
+    private _probesService: ProbesService
   ) { }
 
   ngOnInit() {
-    this._peticionesService.getProbes().subscribe(
-      result => {
-        console.log(result);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+
   }
 
 }

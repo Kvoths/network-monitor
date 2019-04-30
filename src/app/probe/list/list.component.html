@@ -1,0 +1,28 @@
+<h1>Listado de sondas</h1>
+<table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let probe"> {{probe._id}} </td>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let probe"> {{probe.name}} </td>
+    </ng-container>
+    <ng-container matColumnDef="ip">
+      <th mat-header-cell *matHeaderCellDef> Ip </th>
+      <td mat-cell *matCellDef="let probe"> {{probe.ip}} </td>
+    </ng-container>
+    <ng-container matColumnDef="port">
+      <th mat-header-cell *matHeaderCellDef> Port </th>
+      <td mat-cell *matCellDef="let probe"> {{probe.port}} </td>
+    </ng-container>
+    <ng-container matColumnDef="active">
+      <th mat-header-cell *matHeaderCellDef> Active </th>
+      <td mat-cell *matCellDef="let probe"> {{probe.active}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['id', 'name', 'ip', 'port', 'active']"></tr>
+    <tr cdk-row *cdkRowDef="let probe; columns: ['id', 'name', 'ip', 'port', 'active']" 
+      routerLink="/probe/edit/{{probe._id}}">
+    </tr>
+</table>

@@ -1,0 +1,9 @@
+<div *ngIf="probe">
+    <h1>Detalle de sonda</h1>
+    <span>Nombre: </span> <input [(ngModel)]="probe.name">
+    <span>IP: </span> <input [(ngModel)]="probe.ip">
+    <span>Port: </span> <input [(ngModel)]="probe.port">
+    <span>Active: </span> <input [(ngModel)]="probe.active">
+    <button (click)="saveProbe()" mat-raised-button color="primary">Guardar</button>    
+</div>
+
