@@ -22,7 +22,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="['id', 'name', 'ip', 'port', 'active']"></tr>
-    <tr cdk-row *cdkRowDef="let probe; columns: ['id', 'name', 'ip', 'port', 'active']" 
+    <tr mat-row *matRowDef="let probe; columns: ['id', 'name', 'ip', 'port', 'active']" 
       routerLink="/probe/edit/{{probe._id}}">
     </tr>
 </table>

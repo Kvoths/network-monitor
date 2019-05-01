@@ -6,7 +6,7 @@ import { ListComponent } from './list/list.component';
 
 const probeRoutes: Routes = [
   { path: 'probe', component: ListComponent},
-  { path: 'probe/new', component: CreateComponent}
+  { path: 'probe/new', component: CreateComponent},
   { path: 'probe/edit/:id', component: ModifyComponent}
 
 ];
