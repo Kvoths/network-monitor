@@ -9,6 +9,7 @@ import { ProbeRoutingModule } from './probe-routing.module';
 import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
 import { ModifyComponent } from './modify/modify.component';
+import { CommandModule } from '../command/command.module';
 
 @NgModule({
   declarations: [CreateComponent, ListComponent, ModifyComponent],
@@ -18,6 +19,7 @@ import { ModifyComponent } from './modify/modify.component';
     MatButtonModule,
     BrowserAnimationsModule,
     FormsModule,
+    CommandModule,
     ProbeRoutingModule
   ]
 })

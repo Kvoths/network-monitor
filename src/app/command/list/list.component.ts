@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Command, CommandService } from '../../services/command.service';
-import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CreateComponent } from '../create/create.component'
 
 @Component({
-  selector: 'app-list',
+  selector: 'command-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
   providers: [CommandService]
@@ -11,18 +13,18 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 export class ListComponent implements OnInit {
   public commands: Command[];
   public dataSource: MatTableDataSource<Command>;
+  @Input() probe_id: string;
 
   constructor(
-    private _commandService: CommandService
+    private _commandService: CommandService,
+    public dialog: MatDialog
   ) { }
 
   ngOnInit() {
-    this._commandService.getAllCommands().subscribe(
+    this._commandService.getCommandsByProbe(this.probe_id).subscribe(
       commands => {
         this.commands = commands;
         this.dataSource = new MatTableDataSource(commands);
-        console.log(this.commands);
-        console.log(this.dataSource);
       },
       error => {
         console.log(error);
@@ -30,4 +32,16 @@ export class ListComponent implements OnInit {
     );
   }
 
+  openCreateCommand(): void {
+    const dialogRef = this.dialog.open(CreateComponent, {
+      width: '1000px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+ 
+    
+  }
 }

@@ -29,9 +29,6 @@ export class ProbesService {
   }
 
   getProbeById (id: string) {
-    let paramsUrl = new HttpParams();
-    paramsUrl.set('id', id);
-    console.log(this.url + 'find/' + id);
     return this._http.get<Probe>(this.url + 'find/' + id);
   }
 

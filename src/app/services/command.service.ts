@@ -38,4 +38,13 @@ export class CommandService {
   getAllCommands () {
     return this._http.get<Command[]>(this.url);
   }
+
+  getCommandsByProbe (probe_id: string) {
+    console.log('hola');
+    console.log(probe_id);
+    let paramsUrl = new HttpParams().append('probe_id', probe_id);
+    return this._http.get<Command[]>(this.url + 'byProbe', {
+      params: paramsUrl
+    });
+  }
 }

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Probe, Param, ProbesService } from '../../services/probes.service';
 
 @Component({
-  selector: 'app-modify',
+  selector: 'probe-modify',
   templateUrl: './modify.component.html',
   styleUrls: ['./modify.component.scss']
 })
@@ -28,7 +28,6 @@ export class ModifyComponent implements OnInit {
   }
 
   saveProbe () {
-    console.log(this.probe);
     this._probesService.saveProbe(this.probe).subscribe(
       probe => console.log(probe), 
       error => {

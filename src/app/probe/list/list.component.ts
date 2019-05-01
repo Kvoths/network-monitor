@@ -23,7 +23,6 @@ export class ListComponent implements OnInit {
       probes => {
         this.probes = probes;
         this.dataSource = new MatTableDataSource(probes);
-        console.log(this.dataSource);
       },
       error => {
         console.log(error);

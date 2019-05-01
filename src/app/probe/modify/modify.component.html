@@ -4,6 +4,8 @@
     <span>IP: </span> <input [(ngModel)]="probe.ip">
     <span>Port: </span> <input [(ngModel)]="probe.port">
     <span>Active: </span> <input [(ngModel)]="probe.active">
-    <button (click)="saveProbe()" mat-raised-button color="primary">Guardar</button>    
+    <button (click)="saveProbe()" mat-raised-button color="primary">Guardar</button> 
+    
+    <command-list [probe_id]="probe._id"></command-list>
 </div>
 
