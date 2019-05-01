@@ -29,4 +29,9 @@ export class ListComponent implements OnInit {
       }
     );
   }
+
+  searchProbes(text: string) {
+    let probes_filtered = this.probes.filter( probe => probe._id.includes(text) || probe.name.includes(text) || probe.ip.includes(text) || probe.port == +text );
+    this.dataSource = new MatTableDataSource(probes_filtered);
+  }
 }

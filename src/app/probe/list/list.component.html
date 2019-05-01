@@ -1,4 +1,7 @@
 <h1>Listado de sondas</h1>
+<mat-form-field class="example-full-width">
+  <input matInput placeholder="Buscar" (keyup)="searchProbes(probes_searcher.value)" #probes_searcher>
+</mat-form-field>
 <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef> ID </th>
