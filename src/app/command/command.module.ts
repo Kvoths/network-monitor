@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ChartsModule } from 'ng2-charts';
+import { DatePipe } from '@angular/common'
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +12,8 @@ import { FormsModule } from '@angular/forms';
 import { CommandRoutingModule } from './command-routing.module';
 import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
+import { ResultsListComponent } from './results-list/results-list.component';
+import { ResultsChartComponent } from './results-chart/results-chart.component';
 
 @NgModule({
   imports: [
@@ -19,9 +23,11 @@ import { ListComponent } from './list/list.component';
     MatDialogModule,
     BrowserAnimationsModule,
     FormsModule,
+    ChartsModule,
     CommandRoutingModule
   ],
-  declarations: [CreateComponent, ListComponent],
+  providers:[DatePipe],
+  declarations: [CreateComponent, ListComponent, ResultsListComponent, ResultsChartComponent],
   exports: [CreateComponent, ListComponent],
   entryComponents: [CreateComponent]
 })

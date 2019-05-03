@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
+import { ResultsListComponent } from './results-list/results-list.component';
 
 const commandRoutes: Routes = [
-  { path: 'command', component: ListComponent}
+  { path: 'command', component: ListComponent},
+  { path: 'results_list', component: ResultsListComponent}
 
 ];
 

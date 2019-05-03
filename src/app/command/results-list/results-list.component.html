@@ -1,0 +1,5 @@
+<h1>Resultados de los comandos</h1>
+<div *ngFor="let command of commands">
+  <span>{{command.name}}</span>
+  <app-results-chart [command]="command"></app-results-chart>
+</div>
