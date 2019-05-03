@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Command, CommandService } from '../../services/command.service';
+import { GeneralService } from '../../services/general.service';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-results-list',
@@ -9,9 +11,12 @@ import { Command, CommandService } from '../../services/command.service';
 })
 export class ResultsListComponent implements OnInit {
   public commands: Command[];
-
+  public start_date: moment.Moment;
+  public end_date: moment.Moment;
+  public labels: any[];
   constructor(
-    private _commandService: CommandService
+    private _commandService: CommandService,
+    private _generalService: GeneralService
   ) { }
 
   ngOnInit() {
@@ -23,5 +28,8 @@ export class ResultsListComponent implements OnInit {
         console.log(error);
       }
     );
+    this.labels = this._generalService.getDaysOfTheWeek();
+    this.start_date = this.labels[0];
+    this.end_date = this.labels[6];
   }
 }

@@ -10,7 +10,9 @@ import * as moment from 'moment';
 export class ResultsChartComponent implements OnInit {
   public results: Result[];
   @Input() command: Command;
-  public barChartLabels: any[];
+  @Input() start_date: moment.Moment;
+  @Input() end_date: moment.Moment;
+  @Input() barChartLabels: any[];
   public barChartType: string;
   public barChartLegend: boolean;
   public barChartData: any[];
@@ -69,9 +71,6 @@ export class ResultsChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.barChartLabels = this.getDaysOfTheWeek();
-    console.log();
-    console.log(moment().add(1, 'd').toDate());
     this._commandService.getCommandResults(this.command._id).subscribe(
       results => {
         this.results = results;
@@ -81,7 +80,6 @@ export class ResultsChartComponent implements OnInit {
         for (let result of results) {
           data.push(
             {
-//              t: formatDate(result.date, this.timeFormat, 'es'),
               t: moment(result.date).format(this.timeFormat),
               y: result.results.avg
             }
@@ -129,7 +127,6 @@ export class ResultsChartComponent implements OnInit {
       current.set({h: 0, m: 0, s: 0});
       arrDays.push(current.toDate());
       day++;
-      console.log(current);
     }
   
     return arrDays;
