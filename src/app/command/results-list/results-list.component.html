@@ -1,5 +1,10 @@
 <h1>Resultados de los comandos</h1>
 <div *ngFor="let command of commands">
   <span>{{command.name}}</span>
-  <app-results-chart [command]="command"></app-results-chart>
+  <div id="{{command._id}}" chart-selector></div>
+
+  <!--<app-results-chart [command]="command"></app-results-chart>-->
 </div>
+<button
+  (click)="loadComponent()">Hola</button>
+<ng-template chart-selector></ng-template>

@@ -72,4 +72,12 @@ export class CommandService {
   getCommandResults (command_id: string) {
     return this._http.get<Result[]>(this.url + command_id + '/results');
   }
+
+  getCommandResultsBetweenDates (command_id: string, start_date: any, end_date: any) {
+    let paramsUrl = new HttpParams().append('start_date', start_date).append('end_date', end_date);
+
+    return this._http.get<Result[]>(this.url + command_id + '/results/byDate', {
+      params: paramsUrl
+    });
+  }
 }

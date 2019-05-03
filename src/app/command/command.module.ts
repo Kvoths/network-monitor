@@ -14,7 +14,7 @@ import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
 import { ResultsListComponent } from './results-list/results-list.component';
 import { ResultsChartComponent } from './results-chart/results-chart.component';
-
+import { ResultChartDirective } from './results-list/result-chart.directive';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,11 +24,12 @@ import { ResultsChartComponent } from './results-chart/results-chart.component';
     BrowserAnimationsModule,
     FormsModule,
     ChartsModule,
-    CommandRoutingModule
+    CommandRoutingModule,
+
   ],
   providers:[DatePipe],
-  declarations: [CreateComponent, ListComponent, ResultsListComponent, ResultsChartComponent],
+  declarations: [CreateComponent, ListComponent, ResultsListComponent, ResultsChartComponent, ResultChartDirective],
   exports: [CreateComponent, ListComponent],
-  entryComponents: [CreateComponent]
+  entryComponents: [CreateComponent, ResultsChartComponent]
 })
 export class CommandModule { }

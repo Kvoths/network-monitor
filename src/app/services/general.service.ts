@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,33 @@ export class GeneralService {
 
   }
 
-  getDaysInMonth(month, year) {
-    var date = new Date(year, month, 1);
-    var days = [];
-
-    while (date.getMonth() === month) {
-       days.push(new Date(date));
-       date.setDate(date.getDate() + 1);
+  getDaysOfMonth():any[] {
+    let totalNumberDaysInMonth = moment().daysInMonth();
+    let day = 1;
+    let arrDays = [];
+  
+    while(day <= totalNumberDaysInMonth) {
+      let current = moment().date(day);
+      current.set({h: 0, m: 0, s: 0});
+      arrDays.push(current.toDate());
+      day++;
+    }
+  
+    return arrDays;
+  }
+ 
+  getDaysOfTheWeek():any[] {
+    let totalNumberDaysInWeek = 7;
+    let day = 1;
+    let arrDays = [];
+  
+    while(day <= totalNumberDaysInWeek) {
+      let current = moment().day(day);
+      current.set({h: 0, m: 0, s: 0});
+      arrDays.push(current.toDate());
+      day++;
     }
 
-    return days;
+    return arrDays;
   }
 }
