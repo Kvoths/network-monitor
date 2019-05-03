@@ -16,6 +16,25 @@ export interface CronTime {
   dayWeek: string;
 }
 
+export interface Result {
+  _id: string;
+  type: string;
+  date: string;
+  command: string;
+  results: {
+    duration: number;
+    //ping
+    min?: number;
+    avg?: number;
+    max?: number;
+    mdev?: number;
+    //tcpdump
+    num_packets?: number;
+    num_packets_per_secon?: number;
+  };
+
+}
+
 export interface Command {
   _id: string;
   parameters: Parameter[];
@@ -40,11 +59,17 @@ export class CommandService {
   }
 
   getCommandsByProbe (probe_id: string) {
-    console.log('hola');
-    console.log(probe_id);
     let paramsUrl = new HttpParams().append('probe_id', probe_id);
     return this._http.get<Command[]>(this.url + 'byProbe', {
       params: paramsUrl
     });
+  }
+
+  getAllCommandsResults () {
+    return this._http.get<Result[]>(this.url + 'results');
+  }
+
+  getCommandResults (command_id: string) {
+    return this._http.get<Result[]>(this.url + command_id + '/results');
   }
 }
