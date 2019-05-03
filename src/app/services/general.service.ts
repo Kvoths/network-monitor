@@ -25,13 +25,19 @@ export class GeneralService {
     return arrDays;
   }
  
-  getDaysOfTheWeek():any[] {
+  getDaysOfTheWeek(start_date: moment.Moment):any[] {
     let totalNumberDaysInWeek = 7;
     let day = 1;
     let arrDays = [];
   
+    if (start_date === undefined) {
+      start_date = moment();
+    } else {
+      start_date = moment(start_date);
+    }
+
     while(day <= totalNumberDaysInWeek) {
-      let current = moment().day(day);
+      let current = start_date.day(day);
       current.set({h: 0, m: 0, s: 0});
       arrDays.push(current.toDate());
       day++;

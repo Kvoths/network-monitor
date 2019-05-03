@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Command, Result, CommandService } from '../../services/command.service';
+import { GeneralService } from '../../services/general.service';
 import * as moment from 'moment';
 
 @Component({
@@ -22,7 +23,8 @@ export class ResultsChartComponent implements OnInit {
  
 
   constructor(
-    private _commandService: CommandService
+    private _commandService: CommandService,
+    private _generalService: GeneralService
   ) {
     this.timeFormat = 'DD/MM/YYYY HH:mm:ss';
     this.barChartType = 'line';
@@ -71,8 +73,13 @@ export class ResultsChartComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._commandService.getCommandResults(this.command._id).subscribe(
+    this.loadDates();
+  }
+
+  loadDates () {
+    this._commandService.getCommandResultsBetweenDates(this.command._id, this.start_date.toISOString(), this.end_date.toISOString()).subscribe(
       results => {
+        console.log(results);
         this.results = results;
         let data : any[];
         data = [];
@@ -102,33 +109,25 @@ export class ResultsChartComponent implements OnInit {
     );
   }
 
-  getDaysOfMonth():any[] {
-    let totalNumberDaysInMonth = moment().daysInMonth();
-    let day = 1;
-    let arrDays = [];
-  
-    while(day <= totalNumberDaysInMonth) {
-      let current = moment().date(day);
-      current.set({h: 0, m: 0, s: 0});
-      arrDays.push(current.toDate());
-      day++;
-    }
-  
-    return arrDays;
+  goBefore () {
+    console.log('Start date1: ' + this.start_date.toISOString());
+    console.log('End date1: ' + this.end_date.toISOString());
+    this.start_date.subtract(1, 'week').startOf('isoWeek');
+    this.end_date.subtract(1, 'week').endOf('isoWeek');
+    this.barChartLabels = this._generalService.getDaysOfTheWeek(this.start_date);
+    this.loadDates();
+    console.log('Start date2: ' + this.start_date.toISOString());
+    console.log('End date2: ' + this.end_date.toISOString());
   }
- 
-  getDaysOfTheWeek():any[] {
-    let totalNumberDaysInWeek = 6;
-    let day = 0;
-    let arrDays = [];
-  
-    while(day <= totalNumberDaysInWeek) {
-      let current = moment().day(day);
-      current.set({h: 0, m: 0, s: 0});
-      arrDays.push(current.toDate());
-      day++;
-    }
-  
-    return arrDays;
+
+  goAfter () {
+    console.log('Start date1: ' + this.start_date.toISOString());
+    console.log('End date1: ' + this.end_date.toISOString());
+    this.start_date = this.start_date.add(1, 'week');
+    this.end_date = this.end_date.add(1, 'week');
+    this.barChartLabels = this._generalService.getDaysOfTheWeek(this.start_date);
+    this.loadDates();
+    console.log('Start date2: ' + this.start_date.toISOString());
+    console.log('End date2: ' + this.end_date.toISOString());
   }
 }

@@ -28,8 +28,8 @@ export class ResultsListComponent implements OnInit {
         console.log(error);
       }
     );
-    this.labels = this._generalService.getDaysOfTheWeek();
-    this.start_date = this.labels[0];
-    this.end_date = this.labels[6];
+    this.labels = this._generalService.getDaysOfTheWeek(undefined);
+    this.start_date = moment().startOf('isoWeek');
+    this.end_date = moment().endOf('isoWeek');
   }
 }
