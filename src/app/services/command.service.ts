@@ -2,22 +2,22 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 export interface Parameter {
-  _id: string;
+  _id?: string;
   name: string;
   value:string;
 }
 
 export interface CronTime {
-  _id: string;
-  minute: string;
-  hour: string;
-  dayMonth: string;
-  month: string;
-  dayWeek: string;
+  _id?: string;
+  minute?: string;
+  hour?: string;
+  dayMonth?: string;
+  month?: string;
+  dayWeek?: string;
 }
 
 export interface Result {
-  _id: string;
+  _id?: string;
   type: string;
   date: string;
   command: string;
@@ -36,10 +36,12 @@ export interface Result {
 }
 
 export interface Command {
-  _id: string;
+  _id?: string;
+  name: string;
   parameters: Parameter[];
   time: CronTime;
   duration: number;
+  probe: string;
 }
 
 @Injectable({
@@ -79,5 +81,13 @@ export class CommandService {
     return this._http.get<Result[]>(this.url + command_id + '/results/byDate', {
       params: paramsUrl
     });
+  }
+
+  getAvailableCommands () {
+    return this._http.get<{name: string, value: string}[]>(this.url + 'availableTypes');
+  }
+
+  saveCommand (command: Command) {
+    return this._http.post<any>(this.url, command);
   }
 }

@@ -1,10 +1,62 @@
-<section class="createCommand">
-  <div>
-    <input type="text" placeholder="Nombre">
-    <input type="text" placeholder="Sonda">
-    <input type="text" placeholder="IP destino">
-    <input type="text" placeholder="Duracion">
-    <input type="text" placeholder="Fecha">
-    <input type="button" value="Create">
-  </div>
+<h1>Nuevo filtro</h1>
+<section class="create-command--">
+  <form [formGroup]="formGroup" (ngSubmit)="sendNewCommand()">
+    <mat-form-field>
+      <mat-label>Tipo de filtro</mat-label>
+      <mat-select formControlName="selected_command">
+        <mat-option *ngFor="let available_command of available_commands" [value]="available_command.value">
+          {{available_command.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="IP destino" formControlName="destiny">
+      <mat-error *ngIf="destiny.errors?.required">La IP de destino es necesaria.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" >
+      <input matInput placeholder="Duración" formControlName="duration">
+      <mat-error *ngIf="duration.errors?.required">La duración es necesaria.</mat-error>
+      <mat-error *ngIf="duration.errors?.min">La duración debe ser mayor de 1 segundo.</mat-error>
+      <mat-error *ngIf="duration.errors?.max">La duración debe ser menor de 60 segundos.</mat-error>
+      <mat-error *ngIf="duration.errors?.invalidInteger">Debes introducir un número entero</mat-error>
+      
+    </mat-form-field>
+    <div class="create-command--choose-date">
+      <!--<mat-form-field>
+        <mat-label>Minutos</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let minute of minutes" [value]="minute">
+            {{minute}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>-->
+      <p>Programación de ejecución del filtro</p>
+      <p>Ejecutar el filtro cada </p> 
+      <mat-form-field>
+        <input formControlName="interval_number"
+        matInput
+        type="Number"
+        step="1"
+        >
+      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'minute'">La duración debe ser mayor de un minuto.</mat-error>
+      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'minute'">La duración debe ser mayor de un minuto.</mat-error>
+      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'hour'">La duración debe ser mayor de una hora.</mat-error>
+      <mat-error *ngIf="interval_number.errors?.max && interval_time.value == 'minute'">La duración debe ser menor de 60 minutos</mat-error>
+      <mat-error *ngIf="interval_number.errors?.max && interval_time.value == 'hour'">La duración debe ser menor de 24 horas</mat-error>
+      <mat-error *ngIf="interval_number.errors?.invalidInteger">Debes introducir un número entero</mat-error>
+      </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="interval_time" (selectionChange)="changeIntervalTime()">
+            <mat-option value="minute">
+              minutos
+            </mat-option>
+            <mat-option value="hour">
+              horas
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+    </div>
+    <button (click)="saveNewCommand()" mat-raised-button color="primary">Guardar</button>
+  </form>
 </section>

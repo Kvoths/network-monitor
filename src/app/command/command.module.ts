@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
 import { ChartsModule } from 'ng2-charts';
-import { DatePipe } from '@angular/common'
-
+import { DatePipe } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
@@ -21,7 +24,11 @@ import { ResultsChartComponent } from './results-chart/results-chart.component';
     MatTableModule,
     MatButtonModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatSelectModule,
     FormsModule,
     ChartsModule,
     CommandRoutingModule

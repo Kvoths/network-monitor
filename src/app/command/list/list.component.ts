@@ -33,10 +33,12 @@ export class ListComponent implements OnInit {
   }
 
   openCreateCommand(): void {
-    const dialogRef = this.dialog.open(CreateComponent, {
+    let dialogRef = this.dialog.open(CreateComponent, {
       width: '1000px',
       data: {}
     });
+
+    dialogRef.componentInstance.probe_id = this.probe_id;
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
