@@ -30,7 +30,7 @@ export class UserService {
   constructor(
     private _http: HttpClient
   ) {
-    this.url = 'https://www.network-monitor.com:3000/';
+    this.url = 'https://localhost:3000/';
   }
 
   login (user: User) {
