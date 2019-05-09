@@ -47,13 +47,13 @@ export class CreateComponent implements OnInit {
         Validators.required,
         Validators.min(1),
         Validators.max(60),
-        this.validateInteger
+        //this.validateInteger
       ]],
       interval_number: [1, [
         Validators.required,
         Validators.min(1),
         Validators.max(60),
-        this.validateInteger
+        //this.validateInteger
       ]],
       interval_time: ['minute', [
         Validators.required
@@ -88,17 +88,17 @@ export class CreateComponent implements OnInit {
     return this.formGroup.get('interval_time');
   }
 
-  validateInteger (control: AbstractControl) {
+  /*validateInteger (control: AbstractControl) {
     if (!Number.isInteger(control.value)) {
       return {invalidInteger: true}
     }
 
     return null;
-  }
+  }*/
 
   changeIntervalTime() {
     if (this.interval_time.value == 'minute') {
-      this.formGroup.controls['interval_number'].setValidators([Validators.max(60)]);
+      this.formGroup.controls['interval_number'].setValidators([Validators.max(59)]);
     } else if (this.interval_time.value == 'hour') {
       this.formGroup.controls['interval_number'].setValidators([Validators.max(24)]);
     }

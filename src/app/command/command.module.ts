@@ -8,9 +8,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { ChartsModule } from 'ng2-charts';
 import { DatePipe } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
 
 import { CommandRoutingModule } from './command-routing.module';
 import { CreateComponent } from './create/create.component';

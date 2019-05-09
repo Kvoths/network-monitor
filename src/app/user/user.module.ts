@@ -1,12 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
 
 import { UserRoutingModule } from './user-routing.module';
 import { LoginComponent } from './login/login.component'
 @NgModule({
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatInputModule
   ],
   declarations: [LoginComponent]
 })

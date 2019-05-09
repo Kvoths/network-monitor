@@ -1,5 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <!--Content of router-->
+<ul class="nav navbar-nav navbar-right">
+    <li *ngIf="!_userService.isLoggedIn()"><a routerLink="/login">Sign in</a></li>
+    <li *ngIf="_userService.isLoggedIn()"><a routerLink="/profile">{{ _userService.getUserDetails()?.name }}</a></li>
+    <li *ngIf="_userService.isLoggedIn()"><a (click)="_userService.logout()">Logout</a></li>
+</ul>
 <router-outlet></router-outlet>
-
-

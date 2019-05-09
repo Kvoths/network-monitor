@@ -1,7 +1,14 @@
 <section class="login">
-  <div>
-    <input type="text" placeholder="Email">
-    <input type="text" placeholder="Password">
-    <input type="button" value="Log in">
-  </div>
+  <form [formGroup]="formLogin" (ngSubmit)="sendLogin()">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Email" formControlName="email">
+      <mat-error *ngIf="email.errors?.required">El email es necesario</mat-error>
+      <mat-error *ngIf="email.errors?.email">Debes introducir un email válido</mat-error>
+    </mat-form-field>      
+    <mat-form-field class="example-full-width">
+      <input matInput type="password" placeholder="Contraseña" formControlName="password">
+      <mat-error *ngIf="password.errors?.required">La contraseña es necesaria</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Login</button>
+  </form>
 </section>

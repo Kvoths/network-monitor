@@ -38,11 +38,11 @@
         type="Number"
         step="1"
         >
-      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'minute'">La duración debe ser mayor de un minuto.</mat-error>
-      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'minute'">La duración debe ser mayor de un minuto.</mat-error>
-      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'hour'">La duración debe ser mayor de una hora.</mat-error>
-      <mat-error *ngIf="interval_number.errors?.max && interval_time.value == 'minute'">La duración debe ser menor de 60 minutos</mat-error>
-      <mat-error *ngIf="interval_number.errors?.max && interval_time.value == 'hour'">La duración debe ser menor de 24 horas</mat-error>
+      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'minute'">El intervalo de ejecución debe ser mayor de un minuto.</mat-error>
+      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'minute'">El intervalo de ejecución debe ser mayor de un minuto.</mat-error>
+      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'hour'">El intervalo de ejecución debe ser mayor de una hora.</mat-error>
+      <mat-error *ngIf="interval_number.errors?.max && interval_time.value == 'minute'">El intervalo de ejecución debe ser menor de 59 minutos</mat-error>
+      <mat-error *ngIf="interval_number.errors?.max && interval_time.value == 'hour'">El intervalo de ejecución debe ser menor de 24 horas</mat-error>
       <mat-error *ngIf="interval_number.errors?.invalidInteger">Debes introducir un número entero</mat-error>
       </mat-form-field>
         <mat-form-field>
