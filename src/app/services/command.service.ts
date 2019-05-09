@@ -48,11 +48,13 @@ export interface Command {
   providedIn: 'root'
 })
 export class CommandService {
+  public base_url: string;
   public url: string;
 
   constructor(
     private _http: HttpClient
   ) { 
+    this.base_url = 'https://www.network-monitor.com:3000/';
     this.url = 'https://www.network-monitor.com:3000/commands/';
   }
 
@@ -61,10 +63,7 @@ export class CommandService {
   }
 
   getCommandsByProbe (probe_id: string) {
-    let paramsUrl = new HttpParams().append('probe_id', probe_id);
-    return this._http.get<Command[]>(this.url + 'byProbe', {
-      params: paramsUrl
-    });
+    return this._http.get<Command[]>(this.base_url + 'probes/' + probe_id + '/commands');
   }
 
   getAllCommandsResults () {

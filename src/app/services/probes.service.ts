@@ -29,7 +29,7 @@ export class ProbesService {
   }
 
   getProbeById (id: string) {
-    return this._http.get<Probe>(this.url + 'find/' + id);
+    return this._http.get<Probe>(this.url + id);
   }
 
   getAllProbes () {
