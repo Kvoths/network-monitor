@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 export interface User {
   _id?: string;
@@ -28,7 +29,8 @@ export class UserService {
   public token: string;
 
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private router: Router
   ) {
     this.url = 'https://localhost:3000/';
   }
@@ -70,7 +72,7 @@ export class UserService {
   public logout() {
     this.token = '';
     window.localStorage.removeItem('token');
-    //this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/');
   }
 
   public getUserDetails(): UserDetails {

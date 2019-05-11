@@ -129,7 +129,8 @@ export class CreateComponent implements OnInit {
         parameters: [parameter],
         time: time,
         duration: this.duration.value,
-        probe: this.probe_id
+        probe: this.probe_id,
+        active: true
       };
       this._commandService.saveCommand(command).subscribe(
         data => {

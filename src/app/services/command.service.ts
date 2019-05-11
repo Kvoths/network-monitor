@@ -43,6 +43,7 @@ export interface Command {
   time: CronTime;
   duration: number;
   probe: string;
+  active: boolean;
 }
 
 @Injectable({
@@ -103,6 +104,12 @@ export class CommandService {
 
   saveCommand (command: Command) {
     return this._http.post<any>(this.url, command, {
+      headers: this.headers
+    });
+  }
+
+  updateCommand (command: Command) {
+    return this._http.put<any>(this.url + command._id, command, {
       headers: this.headers
     });
   }
