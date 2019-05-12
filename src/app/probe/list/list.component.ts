@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Probe, ProbesService } from '../../services/probes.service';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @Component({
   selector: 'app-list',

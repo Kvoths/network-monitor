@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { UserModule } from './user/user.module';
 import { CommandModule } from './command/command.module';
 import { ProbeModule } from './probe/probe.module';
+import { AlertModule } from './alert/alert.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ProbeModule } from './probe/probe.module';
     UserModule,
     CommandModule,
     ProbeModule,
+    AlertModule,
     AppRoutingModule
   ],
   providers: [],

@@ -22,14 +22,6 @@
       
     </mat-form-field>
     <div class="create-command--choose-date">
-      <!--<mat-form-field>
-        <mat-label>Minutos</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let minute of minutes" [value]="minute">
-            {{minute}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>-->
       <p>Programación de ejecución del filtro</p>
       <p>Ejecutar el filtro cada </p> 
       <mat-form-field>
@@ -38,7 +30,6 @@
         type="Number"
         step="1"
         >
-      <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'minute'">El intervalo de ejecución debe ser mayor de un minuto.</mat-error>
       <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'minute'">El intervalo de ejecución debe ser mayor de un minuto.</mat-error>
       <mat-error *ngIf="interval_number.errors?.min && interval_time.value == 'hour'">El intervalo de ejecución debe ser mayor de una hora.</mat-error>
       <mat-error *ngIf="interval_number.errors?.max && interval_time.value == 'minute'">El intervalo de ejecución debe ser menor de 59 minutos</mat-error>
@@ -54,9 +45,19 @@
               horas
             </mat-option>
           </mat-select>
-
         </mat-form-field>
     </div>
-    <button (click)="saveNewCommand()" mat-raised-button color="primary">Guardar</button>
+    <div>
+      <p>Configurar alerta</p>
+      <mat-form-field>
+        <mat-label>Alerta</mat-label>
+        <mat-select formControlName="command_alert">
+          <mat-option *ngFor="let alert of alerts" [value]="alert._id">
+            Name: {{alert.name}} | Min: {{alert.min}} | Max: {{alert.max}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <button mat-raised-button color="primary">Guardar</button>
   </form>
 </section>

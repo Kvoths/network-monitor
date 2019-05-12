@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Command, Parameter, CronTime, CommandService } from '../../services/command.service';
+import { Alert, AlertsService } from '../../services/alerts.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from '@angular/forms';
 
 @Component({
@@ -13,11 +14,13 @@ export class CreateComponent implements OnInit {
   public formGroup: FormGroup;
   public min: number;
   public max: number;
+  public alerts: Alert[];
   @Input() probe_id: string;
 
   constructor(
     public dialogRef: MatDialogRef<CreateComponent>,
     private _commandService: CommandService,
+    private _alertService: AlertsService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
   ) {
@@ -30,6 +33,15 @@ export class CreateComponent implements OnInit {
     this._commandService.getAvailableCommands().subscribe(
       available_commands => {
         this.available_commands = available_commands;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    this._alertService.getAllAlerts().subscribe(
+      alerts => {
+        this.alerts = alerts;
       },
       error => {
         console.log(error);
@@ -57,7 +69,8 @@ export class CreateComponent implements OnInit {
       ]],
       interval_time: ['minute', [
         Validators.required
-      ]]
+      ]],
+      command_alert: ''
     });
 
     this.formGroup.valueChanges.subscribe(console.log);
@@ -86,6 +99,10 @@ export class CreateComponent implements OnInit {
 
   get interval_time() {
     return this.formGroup.get('interval_time');
+  }
+
+  get command_alert() {
+    return this.formGroup.get('command_alert');
   }
 
   /*validateInteger (control: AbstractControl) {
@@ -132,6 +149,12 @@ export class CreateComponent implements OnInit {
         probe: this.probe_id,
         active: true
       };
+
+      if (this.command_alert.value !== '') {
+        command.alert = this.command_alert.value;
+
+      }
+
       this._commandService.saveCommand(command).subscribe(
         data => {
           console.log('Success');

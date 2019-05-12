@@ -7,26 +7,20 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 
-import { ProbeRoutingModule } from './probe-routing.module';
-import { CreateComponent } from './create/create.component';
+import { AlertRoutingModule } from './alert-routing.module';
 import { ListComponent } from './list/list.component';
-import { ModifyComponent } from './modify/modify.component';
-import { CommandModule } from '../command/command.module';
 
 @NgModule({
-  declarations: [CreateComponent, ListComponent, ModifyComponent],
+  declarations: [ListComponent],
   imports: [
     CommonModule,
+    AlertRoutingModule,
+    MatFormFieldModule,
     MatTableModule,
     MatButtonModule,
-    MatFormFieldModule,
     MatInputModule,
     BrowserAnimationsModule,
-    FormsModule,
-    CommandModule,
-    ProbeRoutingModule
-  ],
-  exports: [
+    FormsModule
   ]
 })
-export class ProbeModule { }
+export class AlertModule { }
