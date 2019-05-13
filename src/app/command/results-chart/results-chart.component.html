@@ -7,6 +7,6 @@
             [options]="barChartOptions">
     </canvas>
     <button (click)="goBefore()">Atrás</button>
-    <button (click)="goAfter()">Adelante</button>
+    <button (click)="goAfter()" *ngIf="now.isAfter(nowPlusOne)">Adelante</button>
   </div>
 </div>

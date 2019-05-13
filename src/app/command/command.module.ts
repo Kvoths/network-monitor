@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { CommandRoutingModule } from './command-routing.module';
 import { CreateComponent } from './create/create.component';
@@ -30,6 +31,7 @@ import { ResultsChartComponent } from './results-chart/results-chart.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MatSelectModule,
+    MatButtonToggleModule,
     FormsModule,
     ChartsModule,
     CommandRoutingModule

@@ -18,9 +18,8 @@ export class ModifyComponent implements OnInit {
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-
     this._probesService.getProbeById(id).subscribe(
-      probe => this.probe = probe, 
+      probe => this.probe = probe , 
       error => {
         console.log(error);
       }

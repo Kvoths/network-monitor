@@ -29,7 +29,7 @@
       <td mat-cell *matCellDef="let command"> 
         <mat-slide-toggle
           color="primary"
-          ([checked])="command.active"
+          [checked]="command.active"
           (click)="toggleCommandActive(command)">
         </mat-slide-toggle>
       </td>

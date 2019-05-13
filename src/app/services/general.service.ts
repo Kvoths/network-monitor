@@ -45,4 +45,46 @@ export class GeneralService {
 
     return arrDays;
   }
+
+  getHoursOfTheDay(start_date: moment.Moment):any[] {
+    let totalHoursInTheDay = 24;
+    let hour = 1;
+    let arrDays = [];
+  
+    if (start_date === undefined) {
+      start_date = moment();
+    } else {
+      start_date = moment(start_date);
+    }
+
+    while(hour <= totalHoursInTheDay) {
+      let current = start_date.hour(hour);
+      current.set({m: 0, s: 0});
+      arrDays.push(current.toDate());
+      hour++;
+    }
+
+    return arrDays;
+  }
+
+  getMinutesOfTheHour(start_date: moment.Moment):any[] {
+    let totalMinutesInTheHour = 60;
+    let minute = 0;
+    let arrDays = [];
+  
+    if (start_date === undefined) {
+      start_date = moment();
+    } else {
+      start_date = moment(start_date);
+    }
+
+    while(minute <= totalMinutesInTheHour) {
+      let current = start_date.minute(minute);
+      current.set({s: 0});
+      arrDays.push(current.toDate());
+      minute = minute + 5;
+    }
+
+    return arrDays;
+  }
 }

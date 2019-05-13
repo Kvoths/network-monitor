@@ -1,10 +1,22 @@
 <h1>Resultados de los comandos</h1>
+<mat-button-toggle-group #display="matButtonToggleGroup" (change)="changeDisplayMode(display.value)" value="hour">
+  <mat-button-toggle value="week">
+    <mat-label>Por semana</mat-label>
+  </mat-button-toggle>
+  <mat-button-toggle value="day">
+    <mat-label>Por día</mat-label>
+  </mat-button-toggle>
+  <mat-button-toggle value="hour">
+    <mat-label>Por hora</mat-label>
+  </mat-button-toggle>
+</mat-button-toggle-group>
 <div *ngFor="let command of commands">
   <span>{{command.name}}</span>
   <app-results-chart 
     [command]="command"
     [start_date]="start_date"
     [end_date]="end_date"
-    [barChartLabels]="labels">
+    [barChartLabels]="labels"
+    [display_mode]="display_mode">
   </app-results-chart>
 </div>
