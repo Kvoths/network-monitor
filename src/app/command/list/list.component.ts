@@ -25,6 +25,8 @@ export class ListComponent implements OnInit {
       commands => {
         this.commands = commands;
         this.dataSource = new MatTableDataSource(commands);
+        console.log('Yep');
+        console.log(commands);
       },
       error => {
         console.log(error);
@@ -65,10 +67,10 @@ export class ListComponent implements OnInit {
     return final_time;
   }
 
-  toggleCommandActive(command: Command): void {
+  toggleCommandActive(command: Command, event: any): void {
     console.log('Hola');
     console.log('Active ' + command.active);
-    command.active = (command.active) ? false : true;
+    command.active = (event.checked) ? true : false;
     console.log('Active ' + command.active);
     this._commandService.updateCommand(command).subscribe(
       response => {

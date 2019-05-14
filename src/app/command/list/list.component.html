@@ -30,7 +30,7 @@
         <mat-slide-toggle
           color="primary"
           [checked]="command.active"
-          (click)="toggleCommandActive(command)">
+          (change)="toggleCommandActive(command, $event)">
         </mat-slide-toggle>
       </td>
     </ng-container>
