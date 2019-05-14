@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Probe, ProbesService } from '../../services/probes.service';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { CreateComponent } from '../create/create.component'
 
 @Component({
   selector: 'app-list',
@@ -14,7 +16,8 @@ export class ListComponent implements OnInit {
   public dataSource: MatTableDataSource<Probe>;
 
   constructor(
-    private _probesService: ProbesService
+    private _probesService: ProbesService,
+    public dialog: MatDialog
   ) { 
     
   }
@@ -32,7 +35,18 @@ export class ListComponent implements OnInit {
   }
 
   searchProbes(text: string) {
-    let probes_filtered = this.probes.filter( probe => probe._id.includes(text) || probe.name.includes(text) || probe.ip.includes(text) || probe.port == +text );
+    let probes_filtered = this.probes.filter( probe => probe._id.includes(text) || probe.name.includes(text));
     this.dataSource = new MatTableDataSource(probes_filtered);
+  }
+
+  openCreateProbe() :void {
+    let dialogRef = this.dialog.open(CreateComponent, {
+      width: '1000px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }

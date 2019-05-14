@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Probe, Param, ProbesService } from '../../services/probes.service';
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from '@angular/forms';
 
 @Component({
   selector: 'probe-modify',
@@ -9,30 +10,57 @@ import { Probe, Param, ProbesService } from '../../services/probes.service';
 })
 export class ModifyComponent implements OnInit {
   public probe: Probe;
+  public formGroup: FormGroup;
 
   constructor(
     private route: ActivatedRoute,
-    private _probesService: ProbesService
+    private _probesService: ProbesService,
+    private formBuilder: FormBuilder
   ) { 
   }
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
     this._probesService.getProbeById(id).subscribe(
-      probe => this.probe = probe , 
+      probe => {
+        this.probe = probe;
+        this.formGroup = this.formBuilder.group({
+          name: [probe.name, [
+            Validators.required
+          ]]
+        });
+
+        this.formGroup.valueChanges.subscribe(console.log);
+
+      },
       error => {
         console.log(error);
       }
     );
+
+
+
   }
 
-  saveProbe () {
-    this._probesService.saveProbe(this.probe).subscribe(
-      probe => console.log(probe), 
-      error => {
-        console.log(error);
-      }
-    );
+  get name() {
+    return this.formGroup.get('name');
   }
 
+  updateProbe () {
+    if (this.formGroup.valid) {
+      let probe: Probe;
+      probe = {
+        _id: this.probe._id,
+        name: this.name.value,
+        active: false
+      };
+
+      this._probesService.updateProbe(probe).subscribe(
+        probe => console.log(probe), 
+        error => {
+          console.log(error);
+        }
+      );
+    }
+  }
 }
