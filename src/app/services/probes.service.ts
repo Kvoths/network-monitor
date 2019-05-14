@@ -10,10 +10,8 @@ export interface Param {
 }
 
 export interface Probe {
-  _id: string;
+  _id?: string;
   name: string;
-  ip: string;
-  port: number;
   active: boolean;
 }
 
@@ -58,6 +56,12 @@ export class ProbesService {
   }
 
   saveProbe (probe: Probe) {
+    return this._http.post<any>(this.url, probe, {
+      headers: this.headers
+    });
+  }
+
+  updateProbe (probe: Probe) {
     return this._http.put<any>(this.url + probe._id, probe, {
       headers: this.headers
     });
