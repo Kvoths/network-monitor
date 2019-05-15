@@ -28,7 +28,7 @@ export class CreateComponent implements OnInit {
       ]],
       min: [0, [
         Validators.required,
-        this.validateMinMax
+        //this.validateMinMax
       ]],
       max: [0, [
         Validators.required,
