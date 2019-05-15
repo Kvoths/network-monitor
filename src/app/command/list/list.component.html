@@ -1,42 +1,44 @@
 <h2>Comandos asignados a la sonda actual</h2>
-<table mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef> ID </th>
-      <td mat-cell *matCellDef="let command"> {{command._id}} </td>
-    </ng-container>
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let command"> {{command.name}} </td>
-    </ng-container>
-    <ng-container matColumnDef="source">
-      <th mat-header-cell *matHeaderCellDef> Origen </th>
-      <td mat-cell *matCellDef="let command"> {{command.probe}} </td>
-    </ng-container>
-    <ng-container matColumnDef="destiny">
-      <th mat-header-cell *matHeaderCellDef> Destino </th>
-      <td mat-cell *matCellDef="let command"> {{command.ip}} </td>
-    </ng-container>
-    <ng-container matColumnDef="duration">
-      <th mat-header-cell *matHeaderCellDef> Duración </th>
-      <td mat-cell *matCellDef="let command"> {{command.duration}} </td>
-    </ng-container>
-    <ng-container matColumnDef="time">
-        <th mat-header-cell *matHeaderCellDef> Ejecución </th>
-        <td mat-cell *matCellDef="let command"> {{getIntervalTime(command.time)}} </td>
-    </ng-container>
-    <ng-container matColumnDef="active">
-      <th mat-header-cell *matHeaderCellDef> Active </th>
-      <td mat-cell *matCellDef="let command"> 
-        <mat-slide-toggle
-          color="primary"
-          [checked]="command.active"
-          (change)="toggleCommandActive(command, $event)">
-        </mat-slide-toggle>
-      </td>
-    </ng-container>
+<section class="container">
+  <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> ID </th>
+        <td mat-cell *matCellDef="let command"> {{command._id}} </td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let command"> {{command.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="source">
+        <th mat-header-cell *matHeaderCellDef> Origen </th>
+        <td mat-cell *matCellDef="let command"> {{command.probe}} </td>
+      </ng-container>
+      <ng-container matColumnDef="destiny">
+        <th mat-header-cell *matHeaderCellDef> Destino </th>
+        <td mat-cell *matCellDef="let command"> {{command.ip}} </td>
+      </ng-container>
+      <ng-container matColumnDef="duration">
+        <th mat-header-cell *matHeaderCellDef> Duración </th>
+        <td mat-cell *matCellDef="let command"> {{command.duration}} </td>
+      </ng-container>
+      <ng-container matColumnDef="time">
+          <th mat-header-cell *matHeaderCellDef> Ejecución </th>
+          <td mat-cell *matCellDef="let command"> {{getIntervalTime(command.time)}} </td>
+      </ng-container>
+      <ng-container matColumnDef="active">
+        <th mat-header-cell *matHeaderCellDef> Active </th>
+        <td mat-cell *matCellDef="let command"> 
+          <mat-slide-toggle
+            color="primary"
+            [checked]="command.active"
+            (change)="toggleCommandActive(command, $event)">
+          </mat-slide-toggle>
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="['id', 'name', 'source', 'destiny','duration','time','active']"></tr>
-    <tr mat-row *matRowDef="let command; columns: ['id', 'name', 'source', 'destiny','duration','time','active']">
-    </tr>
-</table>
-<button (click)="openCreateCommand()" mat-raised-button color="primary">Nuevo comando</button> 
+      <tr mat-header-row *matHeaderRowDef="['id', 'name', 'source', 'destiny','duration','time','active']"></tr>
+      <tr mat-row *matRowDef="let command; columns: ['id', 'name', 'source', 'destiny','duration','time','active']">
+      </tr>
+  </table>
+  <button (click)="openCreateCommand()" mat-raised-button color="primary">Nuevo comando</button>
+</section>

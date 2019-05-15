@@ -10,3 +10,15 @@ table {
         padding-bottom: 1em;
     }
 }
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    //margin-right: auto;
+    margin: 1.5em;
+    align-self: flex-end;
+
+}

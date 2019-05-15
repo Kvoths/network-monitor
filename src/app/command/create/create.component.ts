@@ -126,10 +126,20 @@ export class CreateComponent implements OnInit {
       let command: Command;
       let parameter: Parameter;
       let time: CronTime;
-      parameter = {
-        name: this.destiny.value,
-        value: ''
-      };
+
+
+      if (this.selected_command.value == 'tcpdump') {
+        parameter = {
+          name: '-vv',
+          value: ''
+        };
+      } else {
+        parameter = {
+          name: this.destiny.value,
+          value: ''
+        };
+      }
+
 
       if (this.interval_time.value == 'minute') {
         time = {
@@ -158,6 +168,7 @@ export class CreateComponent implements OnInit {
       this._commandService.saveCommand(command).subscribe(
         data => {
           console.log('Success');
+          this.closeDialog();
         },
         error => {
           console.log(error);
@@ -165,5 +176,9 @@ export class CreateComponent implements OnInit {
       );
     }
     console.log('hola');
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 }

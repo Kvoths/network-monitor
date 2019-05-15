@@ -5,7 +5,7 @@
     <ul class="nav navbar-nav navbar-right">
         <li ><a *ngIf="_userService.isLoggedIn()" routerLink="/probe">Sondas</a></li>
         <li ><a *ngIf="_userService.isLoggedIn()" routerLink="/alert">Alertas</a></li>
-        <li ><a *ngIf="_userService.isLoggedIn()" routerLink="/result_list">Monitorización</a></li>
+        <li ><a *ngIf="_userService.isLoggedIn()" routerLink="/results_list">Monitorización</a></li>
         <li ><a *ngIf="_userService.isLoggedIn()">{{ _userService.getUserDetails()?.name }}</a></li>
         <li ><a *ngIf="_userService.isLoggedIn()" (click)="_userService.logout()">Logout</a></li>
     </ul>

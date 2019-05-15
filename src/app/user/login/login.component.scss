@@ -1,0 +1,13 @@
+.login {
+    width: auto;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    
+    }
+}

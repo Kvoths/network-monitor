@@ -6,6 +6,10 @@ mat-form-field {
 }
 table {
     width: 100%;
+    
+    mat-icon {
+        margin-right: 1em;
+    }
 
     & .mat-cell {
         padding-top: 1em;

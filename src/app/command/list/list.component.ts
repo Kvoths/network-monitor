@@ -21,28 +21,19 @@ export class ListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this._commandService.getCommandsByProbe(this.probe_id).subscribe(
-      commands => {
-        this.commands = commands;
-        this.dataSource = new MatTableDataSource(commands);
-        console.log('Yep');
-        console.log(commands);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.getCommands();
   }
 
   openCreateCommand(): void {
     let dialogRef = this.dialog.open(CreateComponent, {
-      width: '1000px',
+      width: 'auto',
       data: {}
     });
 
     dialogRef.componentInstance.probe_id = this.probe_id;
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getCommands();
       console.log('The dialog was closed');
     });
  
@@ -75,6 +66,20 @@ export class ListComponent implements OnInit {
     this._commandService.updateCommand(command).subscribe(
       response => {
         console.log('ok');
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  getCommands () {
+    this._commandService.getCommandsByProbe(this.probe_id).subscribe(
+      commands => {
+        this.commands = commands;
+        this.dataSource = new MatTableDataSource(commands);
+        console.log('Yep');
+        console.log(commands);
       },
       error => {
         console.log(error);

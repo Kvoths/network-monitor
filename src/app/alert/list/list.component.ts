@@ -39,7 +39,7 @@ export class ListComponent implements OnInit {
 
   openCreateAlert() :void {
     let dialogRef = this.dialog.open(CreateComponent, {
-      width: '1000px',
+      width: 'auto',
       data: {}
     });
 
@@ -50,7 +50,7 @@ export class ListComponent implements OnInit {
 
   openDeleteAlert(id: string) :void {
     let dialogRef = this.dialog.open(DeleteComponent, {
-      width: '1000px',
+      width: 'auto',
       data: {}
     });
     console.log('hola');

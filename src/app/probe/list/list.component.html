@@ -27,6 +27,10 @@
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef> Borrar </th>
         <td mat-cell *matCellDef="let probe">
+          <mat-icon
+            svgIcon="edit"
+            routerLink="/probe/edit/{{probe._id}}">
+          </mat-icon>
           <mat-icon 
             svgIcon="delete"
             (click)="openDeleteProbe(probe._id)">

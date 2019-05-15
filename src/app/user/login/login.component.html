@@ -1,14 +1,19 @@
-<section class="login">
-  <form [formGroup]="formLogin" (ngSubmit)="sendLogin()">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Email" formControlName="email">
-      <mat-error *ngIf="email.errors?.required">El email es necesario</mat-error>
-      <mat-error *ngIf="email.errors?.email">Debes introducir un email válido</mat-error>
-    </mat-form-field>      
-    <mat-form-field class="example-full-width">
-      <input matInput type="password" placeholder="Contraseña" formControlName="password">
-      <mat-error *ngIf="password.errors?.required">La contraseña es necesaria</mat-error>
-    </mat-form-field>
-    <button mat-raised-button color="primary">Login</button>
-  </form>
-</section>
+<mat-card class="login">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form [formGroup]="formLogin" (ngSubmit)="sendLogin()" class="container">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="email.errors?.required">El email es necesario</mat-error>
+        <mat-error *ngIf="email.errors?.email">Debes introducir un email válido</mat-error>
+      </mat-form-field>      
+      <mat-form-field class="example-full-width">
+        <input matInput type="password" placeholder="Contraseña" formControlName="password">
+        <mat-error *ngIf="password.errors?.required">La contraseña es necesaria</mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary">Login</button>
+    </form>
+  </mat-card-content>
+</mat-card>

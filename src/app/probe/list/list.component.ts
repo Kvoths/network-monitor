@@ -25,6 +25,9 @@ export class ListComponent implements OnInit {
     sanitizer: DomSanitizer
   ) { 
     iconRegistry.addSvgIcon(
+      'edit',
+      sanitizer.bypassSecurityTrustResourceUrl('/assets/icons/edit.svg'));
+    iconRegistry.addSvgIcon(
       'delete',
       sanitizer.bypassSecurityTrustResourceUrl('/assets/icons/delete.svg'));
   }
