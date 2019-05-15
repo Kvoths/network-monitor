@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProbesService } from '../../services/probes.service';
+import { AlertsService } from '../../services/alerts.service';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -11,17 +11,15 @@ export class DeleteComponent implements OnInit {
   @Input() id: string;
 
   constructor(
-    private _probesService: ProbesService,
+    private _alertsService: AlertsService,
     public dialogRef: MatDialogRef<DeleteComponent>
-  ) {
-
-  }
+  ) { }
 
   ngOnInit() {
   }
 
-  deleteProbe () {
-    this._probesService.deleteProbe(this.id).subscribe(
+  deleteAlert () {
+    this._alertsService.deleteAlert(this.id).subscribe(
       result => {
         console.log(result);
         this.closeDialog();
@@ -35,4 +33,5 @@ export class DeleteComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
+
 }

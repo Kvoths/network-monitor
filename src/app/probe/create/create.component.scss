@@ -1,0 +1,21 @@
+.container {
+    margin: 1em;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    button {
+        margin-top: 1.5em;
+    }
+}
+
+.update-probe-- {
+    display: flex;
+    flex-direction: column;
+
+    h1 {
+        align-self: center;
+    }
+
+
+}

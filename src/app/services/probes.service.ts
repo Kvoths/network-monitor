@@ -66,4 +66,10 @@ export class ProbesService {
       headers: this.headers
     });
   }
+
+  deleteProbe (id: string) {
+    return this._http.delete<any>(this.url + id, {
+      headers: this.headers
+    });
+  }
 }

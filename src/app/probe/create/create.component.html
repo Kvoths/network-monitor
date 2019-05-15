@@ -1,6 +1,6 @@
-<h1>Nueva sonda</h1>
 <section class="update-probe--">
-  <form [formGroup]="formGroup" (ngSubmit)="sendNewProbe()">
+  <h1>Nueva sonda</h1>
+  <form [formGroup]="formGroup" (ngSubmit)="sendNewProbe()" class="container">
     <mat-form-field class="example-full-width" >
       <input matInput placeholder="Nombre" formControlName="name">
       <mat-error *ngIf="name.errors?.required">El nombre de la sonda es necesario</mat-error>

@@ -1,21 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Probe, ProbesService } from '../../services/probes.service';
+import { Alert, AlertsService } from '../../services/alerts.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { max } from 'moment';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss'],
-  providers: [ProbesService]
+  styleUrls: ['./create.component.scss']
 })
-
 export class CreateComponent implements OnInit {
   public formGroup: FormGroup;
 
-  
   constructor(
-    private _probesService: ProbesService,
+    private _alertsService: AlertsService,
     private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<CreateComponent>
   ) { }
@@ -24,7 +22,17 @@ export class CreateComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       name: ['', [
         Validators.required
-      ]]
+      ]],
+      description: ['', [
+        Validators.required
+      ]],
+      min: [0, [
+        Validators.required,
+        this.validateMinMax
+      ]],
+      max: [0, [
+        Validators.required,
+      ]],
     });
 
     this.formGroup.valueChanges.subscribe(console.log);
@@ -34,15 +42,30 @@ export class CreateComponent implements OnInit {
     return this.formGroup.get('name');
   }
 
-  sendNewProbe () {
+  get description() {
+    return this.formGroup.get('description');
+  }
+
+  get min() {
+    return this.formGroup.get('min');
+  }
+
+  get max() {
+    return this.formGroup.get('max');
+  }
+
+  sendNewAlert () {
+
     if (this.formGroup.valid) {
-      let probe: Probe;
-      probe = {
+      let alert: Alert;
+      alert = {
         name: this.name.value,
-        active: false
+        description: this.description.value,
+        min: this.min.value,
+        max: this.max.value,
       };
 
-      this._probesService.saveProbe(probe).subscribe(
+      this._alertsService.saveAlert(alert).subscribe(
         data => {
           console.log('Success');
           this.closeDialog();
@@ -58,4 +81,16 @@ export class CreateComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
+
+  validateMinMax (control: AbstractControl) {
+    console.log(control.value)
+    if (this.formGroup && control) {
+      if (control.value ) {
+        return {min_max: true};
+      }
+    }
+
+    return null;
+  }
+
 }

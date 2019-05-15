@@ -1,14 +1,33 @@
 h1 {
     margin: 0.75em;
 }
+
 mat-form-field {
     margin-left: 1.5em;
 }
-table {
-    width: 100%;
 
-    & .mat-cell {
-        padding-top: 1em;
-        padding-bottom: 1em;
+.probe-list-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    //flex-direction: column;
+    
+    .list-tools {
+        display: flex;
+ 
+        //flex-direction: row;
     }
+
+    .list-results {
+    }
+
+    button {
+        //margin-right: auto;
+        margin: 1.5em;
+        align-self: flex-end;
+    }
+
+
+
+
 }

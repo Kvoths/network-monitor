@@ -23,9 +23,17 @@
       <th mat-header-cell *matHeaderCellDef> Valor máximo </th>
       <td mat-cell *matCellDef="let alert"> {{alert.max}} </td>
     </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="['id', 'name', 'description', 'min', 'max']"></tr>
-    <tr mat-row *matRowDef="let alert; columns: ['id', 'name', 'description', 'min', 'max']" 
-      routerLink="/alert/edit/{{alert._id}}">
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef> Borrar </th>
+      <td mat-cell *matCellDef="let alert">
+        <mat-icon 
+          svgIcon="delete"
+          (click)="openDeleteAlert(alert._id)">
+        </mat-icon>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="['id', 'name', 'description', 'min', 'max', 'delete']"></tr>
+    <tr mat-row *matRowDef="let alert; columns: ['id', 'name', 'description', 'min', 'max', 'delete']">
     </tr>
 </table>
+<button (click)="openCreateAlert()" mat-raised-button color="primary">Nueva alerta</button> 

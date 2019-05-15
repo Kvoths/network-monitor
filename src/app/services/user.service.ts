@@ -39,6 +39,8 @@ export class UserService {
     return this._http.post<Token>(this.url + 'login', user).subscribe(
       token => {
         this.saveToken (token.token);
+        this.router.navigateByUrl('probe');
+
       },
       error => {
         console.log(error);

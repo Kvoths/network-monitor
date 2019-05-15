@@ -7,6 +7,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 import { ProbeRoutingModule } from './probe-routing.module';
 import { CreateComponent } from './create/create.component';
@@ -28,9 +29,11 @@ import { DeleteComponent } from './delete/delete.component';
     FormsModule,
     ReactiveFormsModule,
     CommandModule,
-    ProbeRoutingModule
+    ProbeRoutingModule,
+    MatIconModule
   ],
   exports: [
-  ]
+  ],
+  entryComponents: [CreateComponent, DeleteComponent]
 })
 export class ProbeModule { }

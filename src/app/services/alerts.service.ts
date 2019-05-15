@@ -49,4 +49,10 @@ export class AlertsService {
       headers: this.headers
     });
   }
+
+  deleteAlert (id: string) {
+    return this._http.delete<any>(this.url + id, {
+      headers: this.headers
+    });
+  }
 }

@@ -4,6 +4,9 @@ import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreateComponent } from '../create/create.component'
+import { DeleteComponent } from '../delete/delete.component'
+import { MatIconRegistry } from '@angular/material';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-list',
@@ -17,21 +20,17 @@ export class ListComponent implements OnInit {
 
   constructor(
     private _probesService: ProbesService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    iconRegistry: MatIconRegistry, 
+    sanitizer: DomSanitizer
   ) { 
-    
+    iconRegistry.addSvgIcon(
+      'delete',
+      sanitizer.bypassSecurityTrustResourceUrl('/assets/icons/delete.svg'));
   }
 
   ngOnInit() {
-    this._probesService.getAllProbes().subscribe(
-      probes => {
-        this.probes = probes;
-        this.dataSource = new MatTableDataSource(probes);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.getProbes();
   }
 
   searchProbes(text: string) {
@@ -41,12 +40,37 @@ export class ListComponent implements OnInit {
 
   openCreateProbe() :void {
     let dialogRef = this.dialog.open(CreateComponent, {
-      width: '1000px',
+      width: 'auto',
       data: {}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
+      this.getProbes();
     });
+  }
+
+  openDeleteProbe(id: string) :void {
+    let dialogRef = this.dialog.open(DeleteComponent, {
+      width: 'auto',
+      data: {}
+    });
+
+    dialogRef.componentInstance.id = id;
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getProbes();
+    });
+  }
+
+  getProbes () {
+    this._probesService.getAllProbes().subscribe(
+      probes => {
+        this.probes = probes;
+        this.dataSource = new MatTableDataSource(probes);
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 }

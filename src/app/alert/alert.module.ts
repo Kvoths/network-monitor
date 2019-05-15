@@ -5,13 +5,16 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
 import { AlertRoutingModule } from './alert-routing.module';
 import { ListComponent } from './list/list.component';
+import { DeleteComponent } from './delete/delete.component';
+import { CreateComponent } from './create/create.component';
 
 @NgModule({
-  declarations: [ListComponent],
+  declarations: [ListComponent, DeleteComponent, CreateComponent],
   imports: [
     CommonModule,
     AlertRoutingModule,
@@ -19,8 +22,11 @@ import { ListComponent } from './list/list.component';
     MatTableModule,
     MatButtonModule,
     MatInputModule,
+    MatIconModule,
+    ReactiveFormsModule,
     BrowserAnimationsModule,
     FormsModule
-  ]
+  ],
+  entryComponents: [CreateComponent, DeleteComponent]
 })
 export class AlertModule { }

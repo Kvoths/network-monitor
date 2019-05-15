@@ -1,0 +1,24 @@
+<h1>Nueva alerta</h1>
+<section class="update-alert--">
+  <form [formGroup]="formGroup" (ngSubmit)="sendNewAlert()">
+    <mat-form-field class="example-full-width" >
+      <input matInput placeholder="Nombre" formControlName="name">
+      <mat-error *ngIf="name.errors?.required">El nombre de la alerta es necesario</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" >
+      <input matInput placeholder="Descripción" formControlName="description">
+      <mat-error *ngIf="description.errors?.required">La Descripción de la alerta es necesaria</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" >
+      <input matInput placeholder="Valor mínimo" formControlName="min">
+      <mat-error *ngIf="description.errors?.required">Un valor mínimo es necesario</mat-error>
+      <mat-error *ngIf="description.errors?.min_max">El valor mínimo ha de ser menor al valor máximo</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" >
+      <input matInput placeholder="Valor máximo" formControlName="max">
+      <mat-error *ngIf="description.errors?.required">Un valor mínimo es necesario</mat-error>
+      <mat-error *ngIf="description.errors?.min_max">El valor máximo ha de ser mayor al valor mínimo</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary">Guardar</button>
+  </form>
+</section>
