@@ -21,11 +21,10 @@ export class DeleteComponent implements OnInit {
   deleteAlert () {
     this._alertsService.deleteAlert(this.id).subscribe(
       result => {
-        console.log(result);
         this.closeDialog();
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

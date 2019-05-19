@@ -1,4 +1,12 @@
 <h1>Resultados de los comandos</h1>
+<mat-form-field>
+  <mat-label>Seleccionar sonda</mat-label>
+  <mat-select [(ngModel)]="selected_probe" (selectionChange)="changeSelectedProbe()">
+    <mat-option *ngFor="let probe of probes" [value]="probe._id">
+      {{probe.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <mat-button-toggle-group #display="matButtonToggleGroup" (change)="changeDisplayMode(display.value)" value="hour">
   <mat-button-toggle value="week">
     <mat-label>Por semana</mat-label>

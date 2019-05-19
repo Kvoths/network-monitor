@@ -11,12 +11,10 @@ import * as moment from 'moment';
 export class ResultsChartComponent implements OnInit {
   public results: Result[];
   @Input() command: Command;
-  /*@Input() start_date: moment.Moment;
-  @Input() end_date: moment.Moment;*/
   private _start_date: moment.Moment;
   private _end_date: moment.Moment;
   @Input() barChartLabels: any[];
-  @Input() display_mode: string;
+  private _display_mode: string;
   public barChartType: string;
   public barChartLegend: boolean;
   public barChartData: any[];
@@ -72,6 +70,9 @@ export class ResultsChartComponent implements OnInit {
           scaleLabel: {
               display: true,
               labelString: 'Milisegundos'
+          },
+          ticks: {
+            min: 0
           }
         }]
       }
@@ -79,8 +80,8 @@ export class ResultsChartComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
     this.loadDates();
-
   }
 
   ngOnInit() {
@@ -91,7 +92,6 @@ export class ResultsChartComponent implements OnInit {
     this.nowPlusOne = moment(this.start_date).add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
     this._commandService.getCommandResultsBetweenDates(this.command._id, this.start_date.toISOString(), this.end_date.toISOString()).subscribe(
       results => {
-        console.log(results);
         this.results = results;
         let data : any[];
         data = [];
@@ -125,14 +125,13 @@ export class ResultsChartComponent implements OnInit {
         ];*/
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
 
   goBefore () {
-    console.log('Start date1: ' + this.start_date.toISOString());
-    console.log('End date1: ' + this.end_date.toISOString());
+    console.log(this.display_mode);
     this.start_date.subtract(1, this.display_mode as moment.unitOfTime.DurationConstructor);
     this.end_date.subtract(1, this.display_mode as moment.unitOfTime.DurationConstructor);
 
@@ -149,13 +148,10 @@ export class ResultsChartComponent implements OnInit {
     }
 
     this.loadDates();
-    console.log('Start date2: ' + this.start_date.toISOString());
-    console.log('End date2: ' + this.end_date.toISOString());
   }
 
   goAfter () {
-    console.log('Start date1: ' + this.start_date.toISOString());
-    console.log('End date1: ' + this.end_date.toISOString());
+    console.log(this.display_mode);
     this.start_date = this.start_date.add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
     this.end_date = this.end_date.add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
 
@@ -181,6 +177,10 @@ export class ResultsChartComponent implements OnInit {
   get end_date(): moment.Moment {
     return this._end_date;
   }
+
+  get display_mode(): string {
+    return this._display_mode
+  }
   
   @Input()
   set start_date(start_date: moment.Moment) {
@@ -190,5 +190,10 @@ export class ResultsChartComponent implements OnInit {
   @Input()
   set end_date(end_date: moment.Moment) {
     this._end_date = end_date;
+  }
+
+  @Input()
+  set display_mode(display_mode: string) {
+    this._display_mode = display_mode;
   }
 }

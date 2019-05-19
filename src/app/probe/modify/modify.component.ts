@@ -34,7 +34,7 @@ export class ModifyComponent implements OnInit {
 
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
 
@@ -58,7 +58,7 @@ export class ModifyComponent implements OnInit {
       this._probesService.updateProbe(probe).subscribe(
         probe => console.log(probe), 
         error => {
-          console.log(error);
+          console.error(error);
         }
       );
     }

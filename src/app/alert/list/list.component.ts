@@ -53,8 +53,6 @@ export class ListComponent implements OnInit {
       width: 'auto',
       data: {}
     });
-    console.log('hola');
-    console.log(id);
     
     dialogRef.componentInstance.id = id;
 
@@ -68,10 +66,9 @@ export class ListComponent implements OnInit {
       alerts => {
         this.alerts = alerts;
         this.dataSource = new MatTableDataSource(alerts);
-        console.log(alerts)
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

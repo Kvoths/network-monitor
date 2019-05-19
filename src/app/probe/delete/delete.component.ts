@@ -23,11 +23,10 @@ export class DeleteComponent implements OnInit {
   deleteProbe () {
     this._probesService.deleteProbe(this.id).subscribe(
       result => {
-        console.log(result);
         this.closeDialog();
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

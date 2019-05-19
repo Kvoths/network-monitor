@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Command, CommandService } from '../../services/command.service';
+import { Probe, ProbesService } from '../../services/probes.service';
 import { GeneralService } from '../../services/general.service';
 import * as moment from 'moment';
 
@@ -15,27 +16,41 @@ export class ResultsListComponent implements OnInit {
   public end_date: moment.Moment;
   public labels: any[];
   public display_mode: string;
+  public probes: Probe[];
+  public selected_probe: string;
 
   constructor(
     private _commandService: CommandService,
+    private _probesService: ProbesService,
     private _generalService: GeneralService
   ) { 
     this.display_mode = 'hour';
   }
 
   ngOnInit() {
-    this._commandService.getAllCommands().subscribe(
-      commands => {
-        this.commands = commands;
+    this._probesService.getAllProbes().subscribe(
+      probes => {
+        this.probes = probes;
+
+        if (probes.length > 0) {
+          this.selected_probe = probes[0]._id;
+        }
+
+        if (this.selected_probe !== '') {
+          this.getCommands();
+        }
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
+
     this.changeDisplayMode (this.display_mode);
   }
 
   changeDisplayMode (display_mode) {
+    this.display_mode = display_mode;
+    console.log(display_mode);
     switch (display_mode) {
       case 'week':
         this.start_date = moment().startOf('isoWeek');
@@ -53,5 +68,20 @@ export class ResultsListComponent implements OnInit {
         this.labels = this._generalService.getMinutesOfTheHour(undefined);
         break;
     }
+  }
+
+  changeSelectedProbe() {
+    this.getCommands();
+  }
+
+  getCommands() {
+    this._commandService.getCommandsByProbe(this.selected_probe).subscribe(
+      commands => {
+        this.commands = commands;
+      },
+      error => {
+        console.error(error);
+      }
+    );
   }
 }

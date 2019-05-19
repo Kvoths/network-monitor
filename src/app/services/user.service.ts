@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-
+import { GeneralService } from './general.service';
+import { map } from 'rxjs/operators'; 
 export interface User {
   _id?: string;
   name?: string;
@@ -30,21 +31,20 @@ export class UserService {
 
   constructor(
     private _http: HttpClient,
+    private _general: GeneralService,
     private router: Router
   ) {
     this.url = 'https://localhost:3000/';
   }
 
   login (user: User) {
-    return this._http.post<Token>(this.url + 'login', user).subscribe(
-      token => {
-        this.saveToken (token.token);
-        this.router.navigateByUrl('probe');
-
-      },
-      error => {
-        console.log(error);
-      }
+    return this._http.post<Token>(this.url + 'login', user).pipe(
+      map((data: Token) => {
+        if (data.token) {
+          this.saveToken(data.token);
+        }
+        return data;
+      })
     );
   }
 
@@ -54,7 +54,7 @@ export class UserService {
         this.saveToken (token.token);
       },
       error => {
-        console.log(error);
+        this._general.handleError(error);
       }
     );
   }

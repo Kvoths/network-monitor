@@ -34,7 +34,6 @@ export class ListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getCommands();
-      console.log('The dialog was closed');
     });
  
     
@@ -59,16 +58,12 @@ export class ListComponent implements OnInit {
   }
 
   toggleCommandActive(command: Command, event: any): void {
-    console.log('Hola');
-    console.log('Active ' + command.active);
     command.active = (event.checked) ? true : false;
-    console.log('Active ' + command.active);
     this._commandService.updateCommand(command).subscribe(
       response => {
-        console.log('ok');
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
@@ -78,11 +73,9 @@ export class ListComponent implements OnInit {
       commands => {
         this.commands = commands;
         this.dataSource = new MatTableDataSource(commands);
-        console.log('Yep');
-        console.log(commands);
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

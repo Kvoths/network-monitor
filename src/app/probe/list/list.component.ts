@@ -72,7 +72,7 @@ export class ListComponent implements OnInit {
         this.dataSource = new MatTableDataSource(probes);
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
   }

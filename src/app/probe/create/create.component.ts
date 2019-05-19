@@ -44,15 +44,13 @@ export class CreateComponent implements OnInit {
 
       this._probesService.saveProbe(probe).subscribe(
         data => {
-          console.log('Success');
           this.closeDialog();
         },
         error => {
-          console.log(error);
+          console.error(error);
         }
       );
     }
-    console.log('hola');
   }
 
   closeDialog() {

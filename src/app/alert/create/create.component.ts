@@ -67,15 +67,13 @@ export class CreateComponent implements OnInit {
 
       this._alertsService.saveAlert(alert).subscribe(
         data => {
-          console.log('Success');
           this.closeDialog();
         },
         error => {
-          console.log(error);
+          console.error(error);
         }
       );
     }
-    console.log('hola');
   }
 
   closeDialog() {
@@ -83,7 +81,6 @@ export class CreateComponent implements OnInit {
   }
 
   validateMinMax (control: AbstractControl) {
-    console.log(control.value)
     if (this.formGroup && control) {
       if (control.value ) {
         return {min_max: true};

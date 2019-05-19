@@ -35,7 +35,7 @@ export class CreateComponent implements OnInit {
         this.available_commands = available_commands;
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
 
@@ -44,7 +44,7 @@ export class CreateComponent implements OnInit {
         this.alerts = alerts;
       },
       error => {
-        console.log(error);
+        console.error(error);
       }
     );
 
@@ -167,15 +167,13 @@ export class CreateComponent implements OnInit {
 
       this._commandService.saveCommand(command).subscribe(
         data => {
-          console.log('Success');
           this.closeDialog();
         },
         error => {
-          console.log(error);
+          console.error(error);
         }
       );
     }
-    console.log('hola');
   }
 
   closeDialog() {

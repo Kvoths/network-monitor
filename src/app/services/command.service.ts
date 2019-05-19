@@ -71,8 +71,6 @@ export class CommandService {
   }
 
   getCommandsByProbe (probe_id: string) {
-    console.log('hola');
-    console.log(probe_id);
     return this._http.get<Command[]>(this.base_url + 'probes/' + probe_id + '/commands', {
       headers: this.headers
     });

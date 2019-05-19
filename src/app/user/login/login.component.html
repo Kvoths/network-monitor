@@ -8,6 +8,7 @@
         <input matInput placeholder="Email" formControlName="email">
         <mat-error *ngIf="email.errors?.required">El email es necesario</mat-error>
         <mat-error *ngIf="email.errors?.email">Debes introducir un email válido</mat-error>
+        <mat-error *ngIf="email.errors?.invalid">Email o contraseña incorrecta</mat-error>
       </mat-form-field>      
       <mat-form-field class="example-full-width">
         <input matInput type="password" placeholder="Contraseña" formControlName="password">
