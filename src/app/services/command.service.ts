@@ -115,4 +115,10 @@ export class CommandService {
       headers: this.headers
     });
   }
+
+  deleteCommand (id: string) {
+    return this._http.delete<any>(this.url + id, {
+      headers: this.headers
+    });
+  }
 }
