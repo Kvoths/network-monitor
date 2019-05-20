@@ -3,6 +3,9 @@ import { Command, CronTime, CommandService } from '../../services/command.servic
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CreateComponent } from '../create/create.component'
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
+import { DeleteComponent } from '../delete/delete.component';
 
 @Component({
   selector: 'command-list',
@@ -17,8 +20,17 @@ export class ListComponent implements OnInit {
 
   constructor(
     private _commandService: CommandService,
-    public dialog: MatDialog
-  ) { }
+    public dialog: MatDialog,
+    iconRegistry: MatIconRegistry, 
+    sanitizer: DomSanitizer
+    ) { 
+    iconRegistry.addSvgIcon(
+      'edit',
+      sanitizer.bypassSecurityTrustResourceUrl('/assets/icons/edit.svg'));
+    iconRegistry.addSvgIcon(
+      'delete',
+      sanitizer.bypassSecurityTrustResourceUrl('/assets/icons/delete.svg'));
+  }
 
   ngOnInit() {
     this.getCommands();
@@ -60,5 +72,18 @@ export class ListComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  openDeleteCommand (id: string) {
+    let dialogRef = this.dialog.open(DeleteComponent, {
+      width: 'auto',
+      data: {}
+    });
+
+    dialogRef.componentInstance.id = id;
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getCommands();
+    });
   }
 }

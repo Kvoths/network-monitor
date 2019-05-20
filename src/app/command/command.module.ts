@@ -18,6 +18,8 @@ import { ListComponent } from './list/list.component';
 import { ResultsListComponent } from './results-list/results-list.component';
 import { ResultsChartComponent } from './results-chart/results-chart.component';
 import { PipesModule } from 'app/pipes/pipes.module';
+import { MatIconModule } from '@angular/material/icon';
+import { DeleteComponent } from './delete/delete.component';
 
 @NgModule({
   imports: [
@@ -35,11 +37,12 @@ import { PipesModule } from 'app/pipes/pipes.module';
     FormsModule,
     ChartsModule,
     CommandRoutingModule,
-    PipesModule
+    PipesModule,
+    MatIconModule
   ],
   providers:[DatePipe],
-  declarations: [CreateComponent, ListComponent, ResultsListComponent, ResultsChartComponent],
+  declarations: [CreateComponent, ListComponent, ResultsListComponent, ResultsChartComponent, DeleteComponent],
   exports: [CreateComponent, ListComponent],
-  entryComponents: [CreateComponent]
+  entryComponents: [CreateComponent, DeleteComponent]
 })
 export class CommandModule { }
