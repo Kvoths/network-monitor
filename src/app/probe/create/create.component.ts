@@ -24,6 +24,9 @@ export class CreateComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       name: ['', [
         Validators.required
+      ]],
+      ip: ['', [
+        Validators.required
       ]]
     });
 
@@ -34,11 +37,16 @@ export class CreateComponent implements OnInit {
     return this.formGroup.get('name');
   }
 
+  get ip() {
+    return this.formGroup.get('ip');
+  }
+
   sendNewProbe () {
     if (this.formGroup.valid) {
       let probe: Probe;
       probe = {
         name: this.name.value,
+        ip: this.ip.value,
         active: false
       };
 

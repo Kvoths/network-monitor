@@ -5,6 +5,10 @@
       <input matInput placeholder="Nombre" formControlName="name">
       <mat-error *ngIf="name.errors?.required">El nombre de la sonda es necesario</mat-error>
     </mat-form-field>
+    <mat-form-field class="example-full-width" >
+      <input matInput placeholder="Ip" formControlName="ip">
+      <mat-error *ngIf="ip.errors?.required">La ip o el dominio donde estará alojada la sonda es necesario</mat-error>
+    </mat-form-field>
     <button mat-raised-button color="primary">Guardar</button>
   </form>
 </section>

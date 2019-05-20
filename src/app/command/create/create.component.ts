@@ -30,7 +30,7 @@ export class CreateComponent implements OnInit {
 
   ngOnInit() {    
     //this.month = [{'name': 'Enero', 'value': 1}, {'name': 'Febrero', 'value': 2}, {'name': 'Marzo', 'value': 3}, {'name': 'Abril', 'value': 4}, {'name': 'Mayo','value': 5}, {'name': 'Junio','value': 6}, {'name': 'Julio','value': 7}, {'name': 'Agosto','value': 8}, {'name': 'Septiembre','value': 9}, {'name': 'Octubre','value': 10}, {'name': 'Noviembre','value': 11}, {'name': 'Diciembre','value': 12}];
-    this._commandService.getAvailableCommands().subscribe(
+    this._commandService.getAvailableCommands(this.probe_id).subscribe(
       available_commands => {
         this.available_commands = available_commands;
       },
@@ -121,6 +121,17 @@ export class CreateComponent implements OnInit {
     }
   }
 
+  changeCommandType() {
+    if (this.selected_command.value == 'tcpdump') {
+      this.formGroup.controls['destiny'].setValidators(null);
+      this.formGroup.controls['destiny'].setErrors(null);
+    } else{
+      this.formGroup.controls['destiny'].setValidators([Validators.required]);
+    }
+
+    this.formGroup.updateValueAndValidity();
+  }
+
   sendNewCommand () {
     if (this.formGroup.valid) {
       let command: Command;
@@ -153,6 +164,7 @@ export class CreateComponent implements OnInit {
 
       command = {
         name : this.selected_command.value,
+        destiny : this.destiny.value,
         parameters: [parameter],
         time: time,
         duration: this.duration.value,
@@ -162,7 +174,6 @@ export class CreateComponent implements OnInit {
 
       if (this.command_alert.value !== '') {
         command.alert = this.command_alert.value;
-
       }
 
       this._commandService.saveCommand(command).subscribe(

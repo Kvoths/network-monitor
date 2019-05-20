@@ -3,18 +3,18 @@
   <div class="container">
     <mat-form-field>
       <mat-label>Tipo de filtro</mat-label>
-      <mat-select formControlName="selected_command">
+      <mat-select formControlName="selected_command" (selectionChange)="changeCommandType()">
         <mat-option *ngFor="let available_command of available_commands" [value]="available_command.value">
           {{available_command.name}}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field class="example-full-width" *ngIf="selected_command.value !== 'tcpdump'">
       <input matInput placeholder="IP destino" formControlName="destiny">
       <mat-error *ngIf="destiny.errors?.required">La IP de destino es necesaria.</mat-error>
     </mat-form-field>
-    <mat-form-field class="example-full-width" >
-      <input matInput placeholder="Duración" formControlName="duration">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Duración (segundos)" formControlName="duration">
       <mat-error *ngIf="duration.errors?.required">La duración es necesaria.</mat-error>
       <mat-error *ngIf="duration.errors?.min">La duración debe ser mayor de 1 segundo.</mat-error>
       <mat-error *ngIf="duration.errors?.max">La duración debe ser menor de 60 segundos.</mat-error>

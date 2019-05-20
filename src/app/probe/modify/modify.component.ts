@@ -27,6 +27,9 @@ export class ModifyComponent implements OnInit {
         this.formGroup = this.formBuilder.group({
           name: [probe.name, [
             Validators.required
+          ]],
+          ip: [probe.ip, [
+            Validators.required
           ]]
         });
 
@@ -46,12 +49,17 @@ export class ModifyComponent implements OnInit {
     return this.formGroup.get('name');
   }
 
+  get ip() {
+    return this.formGroup.get('ip');
+  }
+
   updateProbe () {
     if (this.formGroup.valid) {
       let probe: Probe;
       probe = {
         _id: this.probe._id,
         name: this.name.value,
+        ip: this.ip.value,
         active: false
       };
 

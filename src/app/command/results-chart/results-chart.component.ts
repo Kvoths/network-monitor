@@ -22,6 +22,7 @@ export class ResultsChartComponent implements OnInit {
   public timeFormat: string;
   public now: moment.Moment;
   public nowPlusOne: moment.Moment;
+  public labelString: string;
  // public barChartData: [{ data: number[]; label: string; }];
  
 
@@ -33,6 +34,28 @@ export class ResultsChartComponent implements OnInit {
     this.timeFormat = 'DD/MM/YYYY HH:mm:ss';
     this.barChartType = 'line';
     //this.barChartLegend = true;
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log(changes);
+    this.loadDates();
+  }
+
+  ngOnInit() {
+    this.loadDates();
+
+    switch (this.command.name) {
+      case 'ping':
+        this.labelString = 'Round-trip time (RTT)';
+        break;
+      case 'tcpdump':
+        this.labelString = 'Número de paquetes';
+        break;
+      case 'iperf':
+        this.labelString = 'Round-trip time (RTT)';
+        break;
+    }
 
     this.barChartOptions = {
       elements: {
@@ -69,7 +92,7 @@ export class ResultsChartComponent implements OnInit {
         yAxes: [{
           scaleLabel: {
               display: true,
-              labelString: 'Milisegundos'
+              labelString: this.labelString
           },
           ticks: {
             min: 0
@@ -79,50 +102,20 @@ export class ResultsChartComponent implements OnInit {
     };
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log(changes);
-    this.loadDates();
-  }
-
-  ngOnInit() {
-    this.loadDates();
-  }
-
   loadDates () {
     this.nowPlusOne = moment(this.start_date).add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
     this._commandService.getCommandResultsBetweenDates(this.command._id, this.start_date.toISOString(), this.end_date.toISOString()).subscribe(
       results => {
         this.results = results;
-        let data : any[];
-        data = [];
-        let y: number;
-        
-        for (let result of results) {
-          switch (this.command.name) {
-            case 'ping':
-              y = result.results.avg
-              break;
-            case 'tcpdump':
-              y = result.results.num_packets_per_secon
-              break;
-          }
-          data.push(
-            {
-              t: moment(result.date).format(this.timeFormat),
-              y: y
-            }
-          );
-          /*data
-          {data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-          {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-        ];*/
+
+        switch (this.command.name) {
+          case 'ping':
+            this.setPing(results);
+            break;
+          case 'tcpdump':
+            this.setTcpdump(results);
+            break;
         }
-        this.barChartData = [
-          {data: data, label: 'Series A', fill: false}
-        ];
-        /*this.barChartData = [{data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A'},
-          {data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B'}
-        ];*/
       },
       error => {
         console.error(error);
@@ -168,6 +161,60 @@ export class ResultsChartComponent implements OnInit {
     }
 
     this.loadDates();
+  }
+
+  setPing (results: Result[]) {
+    let ymin, yavg, ymax;
+    let datamin : any[] = [], dataavg : any[] = [], datamax : any[] = [];
+    this.labelString = 'Round-trip time (RTT)';
+
+
+    for (let result of results) {
+      let t = moment(result.date).format(this.timeFormat);
+      ymin = result.results.min;
+      yavg = result.results.avg;
+      ymax = result.results.max;
+
+      datamin.push({
+        t: t,
+        y: ymin
+      });
+
+      dataavg.push({
+        t: t,
+        y: yavg
+      });
+
+      datamax.push({
+        t: t,
+        y: ymax
+      });
+    }
+
+    this.barChartData = [
+      {data: datamin, label: 'RTT mínimo', fill: false},
+      {data: dataavg, label: 'RTT medio', fill: false},
+      {data: datamax, label: 'RTT máximo', fill: false}
+    ];
+  }
+
+  setTcpdump (results: Result[]) {
+    let y;
+    let data : any[] = [];
+
+    for (let result of results) {
+      let t = moment(result.date).format(this.timeFormat);
+      y = result.results.num_packets_per_secon;
+
+      data.push({
+        t: t,
+        y: y
+      });
+    }
+
+    this.barChartData = [
+      {data: data, label: 'Número de paquetes por segundo', fill: false}
+    ];
   }
 
   get start_date(): moment.Moment {

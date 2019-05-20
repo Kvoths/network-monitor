@@ -11,6 +11,7 @@ export interface Param {
 
 export interface Probe {
   _id?: string;
+  ip: string;
   name: string;
   active: boolean;
 }

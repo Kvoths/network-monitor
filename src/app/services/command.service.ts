@@ -39,6 +39,7 @@ export interface Result {
 export interface Command {
   _id?: string;
   name: string;
+  destiny?: string;
   parameters: Parameter[];
   time: CronTime;
   duration: number;
@@ -97,8 +98,8 @@ export class CommandService {
     });
   }
 
-  getAvailableCommands () {
-    return this._http.get<{name: string, value: string}[]>(this.url + 'availableTypes', {
+  getAvailableCommands (probe_id: string) {
+    return this._http.get<{name: string, value: string}[]>(this.base_url + 'probes/' + probe_id + '/commands/availableTypes', {
       headers: this.headers
     });
   }
