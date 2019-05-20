@@ -3,6 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Command, Parameter, CronTime, CommandService } from '../../services/command.service';
 import { Alert, AlertsService } from '../../services/alerts.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from '@angular/forms';
+import { CommandStringPipe } from 'app/pipes/command-string.pipe';
 
 @Component({
   selector: 'command-create',
@@ -11,6 +12,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from 
 })
 export class CreateComponent implements OnInit {
   public available_commands : {name: string, value: string}[];
+  public command : Command;
   public formGroup: FormGroup;
   public min: number;
   public max: number;
@@ -28,10 +30,10 @@ export class CreateComponent implements OnInit {
     this.max = 60; 
   }
 
-  ngOnInit() {    
-    //this.month = [{'name': 'Enero', 'value': 1}, {'name': 'Febrero', 'value': 2}, {'name': 'Marzo', 'value': 3}, {'name': 'Abril', 'value': 4}, {'name': 'Mayo','value': 5}, {'name': 'Junio','value': 6}, {'name': 'Julio','value': 7}, {'name': 'Agosto','value': 8}, {'name': 'Septiembre','value': 9}, {'name': 'Octubre','value': 10}, {'name': 'Noviembre','value': 11}, {'name': 'Diciembre','value': 12}];
-    this._commandService.getAvailableCommands(this.probe_id).subscribe(
+  ngOnInit() { 
+     this._commandService.getAvailableCommands(this.probe_id).subscribe(
       available_commands => {
+        console.log(available_commands);
         this.available_commands = available_commands;
       },
       error => {
@@ -48,29 +50,35 @@ export class CreateComponent implements OnInit {
       }
     );
 
+    let selected_command_default = (this.command !== undefined) ? this.command.name : 'ping';
+    let destiny_default = (this.command !== undefined) ? this.command.destiny : '';
+    let duration_default = (this.command !== undefined) ? this.command.duration : 1;
+    let interval_number_default = (this.command !== undefined) ? this.cronValue(this.command.time).value : 1;
+    let interval_time_default = (this.command !== undefined) ? this.cronValue(this.command.time).name : 'minute';
+    let command_alert_default = (this.command !== undefined && this.command.alert !== undefined) ? this.command.alert : '';
+    let disabled = (this.command !== undefined);
+
     this.formGroup = this.formBuilder.group({
-      selected_command: ['ping', [
+      selected_command: [{value: selected_command_default, disabled: disabled}, Validators.required],
+      destiny: [destiny_default, [
         Validators.required
       ]],
-      destiny: ['', [
-        Validators.required
-      ]],
-      duration: [1, [
+      duration: [duration_default, [
         Validators.required,
         Validators.min(1),
         Validators.max(60),
         //this.validateInteger
       ]],
-      interval_number: [1, [
+      interval_number: [interval_number_default, [
         Validators.required,
         Validators.min(1),
         Validators.max(60),
         //this.validateInteger
       ]],
-      interval_time: ['minute', [
+      interval_time: [interval_time_default, [
         Validators.required
       ]],
-      command_alert: ''
+      command_alert: command_alert_default
     });
 
     this.formGroup.valueChanges.subscribe(console.log);
@@ -104,14 +112,6 @@ export class CreateComponent implements OnInit {
   get command_alert() {
     return this.formGroup.get('command_alert');
   }
-
-  /*validateInteger (control: AbstractControl) {
-    if (!Number.isInteger(control.value)) {
-      return {invalidInteger: true}
-    }
-
-    return null;
-  }*/
 
   changeIntervalTime() {
     if (this.interval_time.value == 'minute') {
@@ -176,18 +176,45 @@ export class CreateComponent implements OnInit {
         command.alert = this.command_alert.value;
       }
 
-      this._commandService.saveCommand(command).subscribe(
-        data => {
-          this.closeDialog();
-        },
-        error => {
-          console.error(error);
-        }
-      );
+      if (this.command !== undefined) {
+        console.log('si')
+        command._id = this.command._id;
+        this._commandService.updateCommand(command).subscribe(
+          data => {
+            this.closeDialog();
+          },
+          error => {
+            console.error(error);
+          }
+        );
+      } else {
+        console.log('no')
+        this._commandService.saveCommand(command).subscribe(
+          data => {
+            this.closeDialog();
+          },
+          error => {
+            console.error(error);
+          }
+        );
+      }
+
     }
   }
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  cronValue (time: CronTime) {
+    let final_time = {name: 'minute', value: 1};
+
+    if (time.minute != '*') {
+      final_time = {name: 'minute', value: +time.minute.split('/')[1]};
+    } else if (time.hour != '*') {
+      final_time = {name: 'hour', value: +time.hour.split('/')[1]};
+    }
+
+    return final_time;
   }
 }

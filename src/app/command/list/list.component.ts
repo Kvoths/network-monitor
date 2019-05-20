@@ -74,6 +74,20 @@ export class ListComponent implements OnInit {
     );
   }
 
+  openModifyCommand (command: Command): void {
+    let dialogRef = this.dialog.open(CreateComponent, {
+      width: 'auto',
+      data: {}
+    });
+
+    dialogRef.componentInstance.probe_id = this.probe_id;
+    dialogRef.componentInstance.command = command;
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getCommands();
+    });
+  }
+
   openDeleteCommand (id: string) {
     let dialogRef = this.dialog.open(DeleteComponent, {
       width: 'auto',
