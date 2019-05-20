@@ -12,7 +12,7 @@ import { AlertModule } from './alert/alert.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,

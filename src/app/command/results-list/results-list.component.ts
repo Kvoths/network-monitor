@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Command, CommandService } from '../../services/command.service';
+import { Command, CronTime, CommandService } from '../../services/command.service';
 import { Probe, ProbesService } from '../../services/probes.service';
 import { GeneralService } from '../../services/general.service';
+
 import * as moment from 'moment';
 
 @Component({

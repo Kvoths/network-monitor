@@ -19,7 +19,7 @@
   </mat-button-toggle>
 </mat-button-toggle-group>
 <div *ngFor="let command of commands">
-  <span>{{command.name}}</span>
+  <span>Commando ejecutado: {{command | commandString}} - Duración: {{command.duration}} - Ejecución: {{command.time | cronString}}</span>
   <app-results-chart 
     [command]="command"
     [start_date]="start_date"

@@ -12,12 +12,12 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
-
 import { CommandRoutingModule } from './command-routing.module';
 import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
 import { ResultsListComponent } from './results-list/results-list.component';
 import { ResultsChartComponent } from './results-chart/results-chart.component';
+import { PipesModule } from 'app/pipes/pipes.module';
 
 @NgModule({
   imports: [
@@ -34,7 +34,8 @@ import { ResultsChartComponent } from './results-chart/results-chart.component';
     MatButtonToggleModule,
     FormsModule,
     ChartsModule,
-    CommandRoutingModule
+    CommandRoutingModule,
+    PipesModule
   ],
   providers:[DatePipe],
   declarations: [CreateComponent, ListComponent, ResultsListComponent, ResultsChartComponent],
