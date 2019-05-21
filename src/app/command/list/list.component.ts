@@ -6,6 +6,7 @@ import { CreateComponent } from '../create/create.component'
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DeleteComponent } from '../delete/delete.component';
+import { Probe } from '../../services/probes.service';
 
 @Component({
   selector: 'command-list',
@@ -16,7 +17,7 @@ import { DeleteComponent } from '../delete/delete.component';
 export class ListComponent implements OnInit {
   public commands: Command[];
   public dataSource: MatTableDataSource<Command>;
-  @Input() probe_id: string;
+  @Input() probe: Probe;
 
   constructor(
     private _commandService: CommandService,
@@ -42,7 +43,7 @@ export class ListComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.componentInstance.probe_id = this.probe_id;
+    dialogRef.componentInstance.probe = this.probe;
 
     dialogRef.afterClosed().subscribe(result => {
       this.getCommands();
@@ -63,7 +64,7 @@ export class ListComponent implements OnInit {
   }
 
   getCommands () {
-    this._commandService.getCommandsByProbe(this.probe_id).subscribe(
+    this._commandService.getCommandsByProbe(this.probe._id).subscribe(
       commands => {
         this.commands = commands;
         this.dataSource = new MatTableDataSource(commands);
@@ -80,7 +81,7 @@ export class ListComponent implements OnInit {
       data: {}
     });
 
-    dialogRef.componentInstance.probe_id = this.probe_id;
+    dialogRef.componentInstance.probe = this.probe;
     dialogRef.componentInstance.command = command;
 
     dialogRef.afterClosed().subscribe(result => {

@@ -10,9 +10,18 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field class="example-full-width" *ngIf="selected_command.value !== 'tcpdump'">
+    <mat-form-field class="example-full-width" *ngIf="selected_command.value === 'ping'">
       <input matInput placeholder="IP destino" formControlName="destiny">
       <mat-error *ngIf="destiny.errors?.required">La IP de destino es necesaria.</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width" *ngIf="selected_command.value === 'iperf'">
+      <mat-label>Sonda actuando como servidor</mat-label>
+      <mat-select formControlName="selected_probe_iperf">
+        <mat-option *ngFor="let probe_iperf of probesIperf" [value]="probe_iperf._id">
+          {{probe_iperf.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="selected_probe_iperf.errors?.required">La sonda que actuará como servidor es necesaria.</mat-error>
     </mat-form-field>
     <mat-form-field class="example-full-width">
       <input matInput placeholder="Duración (segundos)" formControlName="duration">

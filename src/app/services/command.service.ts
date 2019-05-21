@@ -46,6 +46,7 @@ export interface Command {
   probe: string;
   active: boolean;
   alert?: string;
+  server?: string;
 }
 
 @Injectable({

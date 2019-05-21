@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, Input } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Command, Parameter, CronTime, CommandService } from '../../services/command.service';
+import { Probe, ProbesService } from '../../services/probes.service';
 import { Alert, AlertsService } from '../../services/alerts.service';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl} from '@angular/forms';
 import { CommandStringPipe } from 'app/pipes/command-string.pipe';
@@ -17,12 +18,14 @@ export class CreateComponent implements OnInit {
   public min: number;
   public max: number;
   public alerts: Alert[];
-  @Input() probe_id: string;
+  public probesIperf: Probe[];
+  @Input() probe: Probe;
 
   constructor(
     public dialogRef: MatDialogRef<CreateComponent>,
     private _commandService: CommandService,
     private _alertService: AlertsService,
+    private _probesService: ProbesService,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder
   ) {
@@ -31,7 +34,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() { 
-     this._commandService.getAvailableCommands(this.probe_id).subscribe(
+     this._commandService.getAvailableCommands(this.probe._id).subscribe(
       available_commands => {
         console.log(available_commands);
         this.available_commands = available_commands;
@@ -50,6 +53,20 @@ export class CreateComponent implements OnInit {
       }
     );
 
+    this._probesService.getAllProbes().subscribe(
+      probes => {
+        this.probesIperf = [];
+        for (let probe_aux of probes) {
+          if (probe_aux._id != this.probe._id) {
+            this.probesIperf.push(probe_aux); 
+          }
+        }
+      },
+      error => {
+        console.error(error);
+      }
+    );
+
     let selected_command_default = (this.command !== undefined) ? this.command.name : 'ping';
     let destiny_default = (this.command !== undefined) ? this.command.destiny : '';
     let duration_default = (this.command !== undefined) ? this.command.duration : 1;
@@ -57,6 +74,7 @@ export class CreateComponent implements OnInit {
     let interval_time_default = (this.command !== undefined) ? this.cronValue(this.command.time).name : 'minute';
     let command_alert_default = (this.command !== undefined && this.command.alert !== undefined) ? this.command.alert : '';
     let disabled = (this.command !== undefined);
+    let selected_probe_iperf_default = (this.command !== undefined && this.command.name === 'iperf') ? this.command.server : '';
 
     this.formGroup = this.formBuilder.group({
       selected_command: [{value: selected_command_default, disabled: disabled}, Validators.required],
@@ -78,11 +96,13 @@ export class CreateComponent implements OnInit {
       interval_time: [interval_time_default, [
         Validators.required
       ]],
-      command_alert: command_alert_default
+      command_alert: command_alert_default,
+      selected_probe_iperf: selected_probe_iperf_default
     });
 
     this.formGroup.valueChanges.subscribe(console.log);
 
+    this.changeCommandType();
   }
 
   saveNewCommand() {
@@ -113,6 +133,10 @@ export class CreateComponent implements OnInit {
     return this.formGroup.get('command_alert');
   }
 
+  get selected_probe_iperf() {
+    return this.formGroup.get('selected_probe_iperf');
+  }
+
   changeIntervalTime() {
     if (this.interval_time.value == 'minute') {
       this.formGroup.controls['interval_number'].setValidators([Validators.max(59)]);
@@ -125,8 +149,12 @@ export class CreateComponent implements OnInit {
     if (this.selected_command.value == 'tcpdump') {
       this.formGroup.controls['destiny'].setValidators(null);
       this.formGroup.controls['destiny'].setErrors(null);
-    } else{
+    } else if (this.selected_command.value == 'ping') {
       this.formGroup.controls['destiny'].setValidators([Validators.required]);
+    } else {
+      this.formGroup.controls['destiny'].setValidators(null);
+      this.formGroup.controls['destiny'].setErrors(null);
+      this.formGroup.controls['selected_probe_iperf'].setValidators([Validators.required]);
     }
 
     this.formGroup.updateValueAndValidity();
@@ -138,19 +166,26 @@ export class CreateComponent implements OnInit {
       let parameter: Parameter;
       let time: CronTime;
 
-
-      if (this.selected_command.value == 'tcpdump') {
-        parameter = {
-          name: '-vv',
-          value: ''
-        };
-      } else {
-        parameter = {
-          name: this.destiny.value,
-          value: ''
-        };
+      switch (this.selected_command.value) {
+        case 'tcpdump':
+          parameter = {
+            name: '-vv',
+            value: ''
+          };
+          break;
+        case 'ping':
+          parameter = {
+            name: this.destiny.value,
+            value: ''
+          };
+          break;
+        case 'iperf':
+          parameter = {
+            name: '-c',
+            value: this.probesIperf.filter( probe => probe._id.includes(this.selected_probe_iperf.value))[0].ip
+          };
+          break;
       }
-
 
       if (this.interval_time.value == 'minute') {
         time = {
@@ -168,12 +203,16 @@ export class CreateComponent implements OnInit {
         parameters: [parameter],
         time: time,
         duration: this.duration.value,
-        probe: this.probe_id,
-        active: true
+        probe: this.probe._id,
+        active: true,
       };
 
       if (this.command_alert.value !== '') {
         command.alert = this.command_alert.value;
+      }
+
+      if (this.selected_command.value === 'iperf') {
+        command.server = this.selected_probe_iperf.value;
       }
 
       if (this.command !== undefined) {
@@ -199,6 +238,9 @@ export class CreateComponent implements OnInit {
         );
       }
 
+    } else {
+      console.log('hola');
+      console.log(this.command.server);
     }
   }
 
