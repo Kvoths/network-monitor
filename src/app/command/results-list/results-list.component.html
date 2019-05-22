@@ -18,8 +18,10 @@
     <mat-label>Por hora</mat-label>
   </mat-button-toggle>
 </mat-button-toggle-group>
+<button (click)="goBefore()">Atrás</button>
+<button (click)="goAfter()" *ngIf="now.isAfter(nowPlusOne)">Adelante</button>
 <div *ngFor="let command of commands">
-  <span>Commando ejecutado: {{command | commandString}} - Duración: {{command.duration}} - Ejecución: {{command.time | cronString}}</span>
+  <h2>Commando ejecutado: {{command | commandString}} - Duración: {{command.duration}} - Ejecución: {{command.time | cronString}}</h2>
   <app-results-chart 
     [command]="command"
     [start_date]="start_date"

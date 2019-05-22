@@ -19,6 +19,8 @@ export class ResultsListComponent implements OnInit {
   public display_mode: string;
   public probes: Probe[];
   public selected_probe: string;
+  public now: moment.Moment;
+  public nowPlusOne: moment.Moment;
 
   constructor(
     private _commandService: CommandService,
@@ -26,6 +28,8 @@ export class ResultsListComponent implements OnInit {
     private _generalService: GeneralService
   ) { 
     this.display_mode = 'hour';
+    this.now = moment();
+    this.nowPlusOne = moment(this.start_date).add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
   }
 
   ngOnInit() {
@@ -47,6 +51,7 @@ export class ResultsListComponent implements OnInit {
     );
 
     this.changeDisplayMode (this.display_mode);
+    
   }
 
   changeDisplayMode (display_mode) {
@@ -84,5 +89,56 @@ export class ResultsListComponent implements OnInit {
         console.error(error);
       }
     );
+  }
+
+  goBefore () {
+    console.log('Now:');
+    console.log(this.now);
+    console.log('NowPlusOne:');
+    console.log(this.nowPlusOne);
+    console.log(this.display_mode);
+    this.start_date.subtract(1, this.display_mode as moment.unitOfTime.DurationConstructor);
+    this.end_date.subtract(1, this.display_mode as moment.unitOfTime.DurationConstructor);
+
+    switch (this.display_mode) {
+      case 'week':
+      this.labels = this._generalService.getDaysOfTheWeek(this.start_date);
+      break;
+    case 'day':
+      this.labels = this._generalService.getHoursOfTheDay(this.start_date);
+      break;
+    case 'hour':
+      this.labels = this._generalService.getMinutesOfTheHour(this.start_date);
+      break;
+    }
+
+    this.nowPlusOne = moment(this.start_date).add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
+    //this.loadDates();
+  }
+
+  goAfter () {
+    console.log('Now:');
+    console.log(this.now);
+    console.log('NowPlusOne:');
+    console.log(this.nowPlusOne);
+    console.log(this.display_mode);
+    this.start_date = this.start_date.add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
+    this.end_date = this.end_date.add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
+
+    switch (this.display_mode) {
+      case 'week':
+      this.labels = this._generalService.getDaysOfTheWeek(this.start_date);
+      break;
+    case 'day':
+      this.labels = this._generalService.getHoursOfTheDay(this.start_date);
+      break;
+    case 'hour':
+      this.labels = this._generalService.getMinutesOfTheHour(this.start_date);
+      break;
+    }
+
+    this.nowPlusOne = moment(this.start_date).add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
+
+    //this.loadDates();
   }
 }

@@ -30,7 +30,6 @@ export class ResultsChartComponent implements OnInit {
     private _commandService: CommandService,
     private _generalService: GeneralService
   ) {
-    this.now = moment();
     this.timeFormat = 'DD/MM/YYYY HH:mm:ss';
     this.barChartType = 'line';
     //this.barChartLegend = true;
@@ -124,46 +123,6 @@ export class ResultsChartComponent implements OnInit {
         console.error(error);
       }
     );
-  }
-
-  goBefore () {
-    console.log(this.display_mode);
-    this.start_date.subtract(1, this.display_mode as moment.unitOfTime.DurationConstructor);
-    this.end_date.subtract(1, this.display_mode as moment.unitOfTime.DurationConstructor);
-
-    switch (this.display_mode) {
-      case 'week':
-      this.barChartLabels = this._generalService.getDaysOfTheWeek(this.start_date);
-      break;
-    case 'day':
-      this.barChartLabels = this._generalService.getHoursOfTheDay(this.start_date);
-      break;
-    case 'hour':
-      this.barChartLabels = this._generalService.getMinutesOfTheHour(this.start_date);
-      break;
-    }
-
-    this.loadDates();
-  }
-
-  goAfter () {
-    console.log(this.display_mode);
-    this.start_date = this.start_date.add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
-    this.end_date = this.end_date.add(1, this.display_mode as moment.unitOfTime.DurationConstructor);
-
-    switch (this.display_mode) {
-      case 'week':
-      this.barChartLabels = this._generalService.getDaysOfTheWeek(this.start_date);
-      break;
-    case 'day':
-      this.barChartLabels = this._generalService.getHoursOfTheDay(this.start_date);
-      break;
-    case 'hour':
-      this.barChartLabels = this._generalService.getMinutesOfTheHour(this.start_date);
-      break;
-    }
-
-    this.loadDates();
   }
 
   setPing (results: Result[]) {
