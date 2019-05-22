@@ -32,6 +32,8 @@ export interface Result {
     //tcpdump
     num_packets?: number;
     num_packets_per_secon?: number;
+    //iperf
+    bandwidth?: Parameter
   };
 
 }

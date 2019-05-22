@@ -53,7 +53,7 @@ export class ResultsChartComponent implements OnInit {
         this.labelString = 'Número de paquetes';
         break;
       case 'iperf':
-        this.labelString = 'Round-trip time (RTT)';
+        this.labelString = 'Bandwidth';
         break;
     }
 
@@ -114,6 +114,9 @@ export class ResultsChartComponent implements OnInit {
             break;
           case 'tcpdump':
             this.setTcpdump(results);
+            break;
+          case 'iperf':
+            this.setIperf(results);
             break;
         }
       },
@@ -217,6 +220,24 @@ export class ResultsChartComponent implements OnInit {
     ];
   }
 
+  setIperf (results: Result[]) {
+    let y;
+    let data : any[] = [];
+
+    for (let result of results) {
+      let t = moment(result.date).format(this.timeFormat);
+      y = result.results.bandwidth.value;
+
+      data.push({
+        t: t,
+        y: y
+      });
+    }
+
+    this.barChartData = [
+      {data: data, label: 'Ancho de banda', fill: false}
+    ];
+  }
   get start_date(): moment.Moment {
     return this._start_date;
   }
